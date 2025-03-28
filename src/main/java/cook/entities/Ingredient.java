@@ -1,15 +1,18 @@
 package cook.entities;
 
 public class Ingredient {
-    private String name;
+    public  String name;
     private int stock;
     private int lowStockThreshold;
+    private boolean alertAcknowledged;
 
     public Ingredient(String name, int stock, int lowStockThreshold) {
         this.name = name;
         this.stock = stock;
         this.lowStockThreshold = lowStockThreshold;
+        this.alertAcknowledged = false;
     }
+
 
     public String getName() {
         return name;
@@ -19,11 +22,24 @@ public class Ingredient {
         return stock;
     }
 
+    public int getLowStockThreshold() {
+        return lowStockThreshold;
+    }
+
+    public boolean isAlertAcknowledged() {
+        return alertAcknowledged;
+    }
+
+    // Setters
     public void setStock(int stock) {
         this.stock = stock;
     }
 
-    public int getLowStockThreshold() {
-        return lowStockThreshold;
+    public void setLowStockThreshold(int lowStockThreshold) {
+        this.lowStockThreshold = lowStockThreshold;
+    }
+
+    public void acknowledgeAlert() {
+        this.alertAcknowledged = true;
     }
 }
