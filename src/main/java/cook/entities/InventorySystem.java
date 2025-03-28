@@ -1,104 +1,89 @@
 package cook.entities;
-
-
-
+import data.IngredientData;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
 public class InventorySystem {
-
-    private static final Logger logger = Logger.getLogger(InventorySystem.class.getName());
-
-    private Map<String, Integer> stockLevels;
-    private boolean alertReviewed;
-    private String lowStockAlert;
-    private String criticalAlert;
-    private String restockRecommendation;
-    private String escalatedAlert;
+    private final Map<String, Ingredient> inventory = new HashMap<>();
+    private String lastNotification;
+    private boolean alertReviewed = false;
 
     public InventorySystem() {
-        stockLevels = new HashMap<>();
-        alertReviewed = false;
-        lowStockAlert = "";
-        criticalAlert = "";
-        restockRecommendation = "";
-        escalatedAlert = "";
+        
+        for (Ingredient ingredient : IngredientData.getAllIngredients()) {
+            inventory.put(ingredient.getName(), ingredient);
+        }
     }
 
-    // Updates the stock level
-    public void updateStock(String ingredient, int stockLevel) {
-        stockLevels.put(ingredient, stockLevel);
+    public void updateStock(String ingredientName, int quantity) {
+        if (inventory.containsKey(ingredientName)) {
+            inventory.get(ingredientName).setStock(quantity);
+        }
     }
 
-    // Checks if the stock for a given ingredient is low
     public String checkLowStockAlerts() {
-        for (Map.Entry<String, Integer> entry : stockLevels.entrySet()) {
-            String ingredient = entry.getKey();
-            int stock = entry.getValue();
-            if (stock < 10) {  // Threshold for low stock is 10 units
-                lowStockAlert = "Low stock alert for " + ingredient + ": " + stock + " kg remaining.";
-                logger.info(lowStockAlert);
-                return lowStockAlert;
+        for (Ingredient ingredient : inventory.values()) {
+            if (ingredient.getStock() < ingredient.getLowStockThreshold()) {
+                lastNotification = "Low Stock Alert: " + ingredient.getName() +
+                        " stock is below " + ingredient.getLowStockThreshold() + ".\n" +
+                        "Consider reordering to prevent shortages.";
+                return lastNotification;
             }
         }
-        return "No low stock alerts.";
+        return "";
     }
 
-    // Checks if the stock for any ingredient is critically low (e.g., 0 stock)
     public String checkCriticalStockAlerts() {
-        for (Map.Entry<String, Integer> entry : stockLevels.entrySet()) {
-            String ingredient = entry.getKey();
-            int stock = entry.getValue();
-            if (stock == 0) {  // Threshold for critical stock is 0 units
-                criticalAlert = "Critical stock alert for " + ingredient + ": 0 liters remaining.";
-                logger.info(criticalAlert);
-                return criticalAlert;
+        for (Ingredient ingredient : inventory.values()) {
+            if (ingredient.getStock() == 0) {
+                lastNotification = "Out of Stock Alert: " + ingredient.getName() +
+                        " is completely out of stock!\n" +
+                        "Immediate restocking is required to continue kitchen operations.";
+                return lastNotification;
             }
         }
-        return "No critical stock alerts.";
+        return "";
     }
 
-    // Checks if restock is needed based on the stock levels of all ingredients
     public String checkRestockRecommendation() {
-        for (Map.Entry<String, Integer> entry : stockLevels.entrySet()) {
-            String ingredient = entry.getKey();
-            int stock = entry.getValue();
-            if (stock < 10) {
-                restockRecommendation = "Restock recommendation for " + ingredient + " as stock is low.";
-                logger.info(restockRecommendation);
-                return restockRecommendation;
+        StringBuilder recommendation = new StringBuilder("Low Stock Alert:\n");
+        boolean hasLowStock = false;
+
+        for (Ingredient ingredient : inventory.values()) {
+            if (ingredient.getStock() < ingredient.getLowStockThreshold()) {
+                recommendation.append("- ").append(ingredient.getName()).append(": ")
+                        .append(ingredient.getStock()).append(" remaining (Order Recommended)\n");
+                hasLowStock = true;
             }
         }
-        return "No restock recommendations.";
+
+        if (hasLowStock) {
+            recommendation.append("Would you like to place an order now? [Yes] [No]");
+            lastNotification = recommendation.toString();
+            return lastNotification;
+        }
+        return "";
     }
 
-    // Sends low stock alert
-    public void sendLowStockAlert(String ingredient) {
-        lowStockAlert = "Low stock alert for " + ingredient + ".";
-        logger.info("Low-stock alert sent for: " + ingredient);
+    public void sendLowStockAlert(String ingredientName) {
+        if (inventory.containsKey(ingredientName)) {
+            lastNotification = "Low-stock alert sent for: " + ingredientName;
+        }
     }
 
-    // Marks an alert as reviewed
     public void acknowledgeAlert() {
         alertReviewed = true;
-        logger.info("Alert acknowledged.");
     }
 
-    // Checks if an alert has been reviewed
     public boolean isAlertReviewed() {
         return alertReviewed;
     }
 
-
-    public void logUnacknowledgedAlert(String ingredient, int hoursAgo) {
-        escalatedAlert = "Alert for " + ingredient + " escalated after " + hoursAgo + " hours of no action.";
-        logger.info(escalatedAlert);
+    public void logUnacknowledgedAlert(String ingredientName, int hoursAgo) {
+        lastNotification = "Low-stock alert for " + ingredientName + " was sent " + hoursAgo + " hours ago.";
     }
 
-    // Checks if any escalated alerts are present
     public String checkEscalatedAlerts() {
-        return escalatedAlert;
+        return "URGENCY: An ingredient is still low on stock. No action has been taken.";
     }
 }
-
