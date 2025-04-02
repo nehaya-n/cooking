@@ -1,13 +1,13 @@
 package cook.entities;
 
-public class Ingredient {
+public class Ingredient1 {
     private String name;
     private int stock;
     private int lowStockThreshold;
     private boolean alertAcknowledged;
 
     // Constructor (اختياري، لتعيين القيم الأولية عند الإنشاء)
-    public Ingredient(String name, int stock, int lowStockThreshold) {
+    public Ingredient1(String name, int stock, int lowStockThreshold) {
         this.name = name;
         this.stock = stock;
         this.lowStockThreshold = lowStockThreshold;
