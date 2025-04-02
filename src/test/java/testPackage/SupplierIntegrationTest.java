@@ -37,15 +37,14 @@ public class SupplierIntegrationTest {
 
     @Then("the system should retrieve and display the latest prices from suppliers:")
     public void the_system_retrieves_and_displays_prices(io.cucumber.datatable.DataTable dataTable) {
-        Map<String, Map<String, String>> expectedPrices = dataTable.asMap(String.class, Map.class);
+        Map<String, String> expectedPrices = dataTable.asMap(String.class, String.class);
+
         // Example expected output for checking:
         // Supplier A -> Tomatoes: $2.50/kg
         // Supplier B -> Olive Oil: $5.00/liter
         // Supplier C -> Chicken: $8.00/kg
-        expectedPrices.forEach((supplier, ingredientInfo) -> {
-            ingredientInfo.forEach((ingredient, price) -> {
-                logger.info(WHITE + "Supplier: " + supplier + " | Ingredient: " + ingredient + " | Price: " + price + RESET);
-            });
+        expectedPrices.forEach((ingredient, price) -> {
+            logger.info(WHITE + "Ingredient: " + ingredient + " | Price: " + price + RESET);
         });
         // Simulate the system displaying the prices here
     }
