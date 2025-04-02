@@ -1,52 +1,104 @@
+
 package org.example;
 
-import cook.entities.Ingredient1;
-import data.IngredientData1;
+import java.util.Map;
+import java.util.Scanner;
 
 public class Main {
+
     public static void main(String[] args) {
-        // تهيئة المكونات في النظام
-        IngredientData1.initializeIngredients();
+        // تعريف الأسعار للمكونات المختلفة من الموردين
+        Map<String, Double> tomatoPrices = Map.of("Supplier A", 2.50, "Supplier B", 3.30, "Supplier C", 2.75);
+        Map<String, Double> oliveOilPrices = Map.of("Supplier A", 5.00, "Supplier B", 4.80, "Supplier C", 5.20);
+        Map<String, Double> chickenPrices = Map.of("Supplier A", 8.00, "Supplier B", 7.50, "Supplier C", 7.80);
 
-        // السيناريو الأول: التحقق من الأسعار الحية للمكونات
-        System.out.println("Scenario 1: Kitchen manager checks real-time pricing for ingredients.");
-        Ingredient1 tomato = IngredientData1.getIngredientByName("Tomatoes");
-        System.out.println("Ingredient: " + tomato.getName());
-        System.out.println("Current Stock: " + tomato.getStock() + " kg");
-        System.out.println("Low Stock Threshold: " + tomato.getLowStockThreshold() + " kg");
+        // تعريف المخزون للمكونات
+        Map<String, Integer> stockLevels = Map.of(
+                "Tomatoes", 10,
+                "Olive Oil", 2,
+                "Chicken", 15
+        );
 
-        // السيناريو الثاني: مقارنة الأسعار بين الموردين
-        System.out.println("\nScenario 2: Kitchen manager compares supplier prices.");
-        String bestSupplier = "Supplier A"; // فرضًا نختار المورد الأفضل
-        System.out.println("Best Supplier for Tomatoes: " + bestSupplier);
+        // إنشاء كائن Scanner لقراءة المدخلات من المستخدم
+        Scanner scanner = new Scanner(System.in);
 
-        // السيناريو الثالث: توليد أمر شراء تلقائي عندما يكون المخزون منخفض
-        System.out.println("\nScenario 3: System auto-generates purchase order for low stock.");
-        if (tomato.getStock() < tomato.getLowStockThreshold()) {
-            System.out.println("Low Stock Alert: " + tomato.getName() + " stock is below threshold!");
-            System.out.println("Auto-Purchase Order: Ingredient: " + tomato.getName() + ", Quantity: 5 kg.");
+        // حلقة لتمكين المستخدم من إدخال أكثر من منتج
+        while (true) {
+            System.out.println("Enter the product to compare prices (Tomatoes, Olive Oil, Chicken), or type 'exit' to quit:");
+            String ingredientName = scanner.nextLine().trim();
+
+            // التحقق إذا كان المستخدم يريد الخروج
+            if (ingredientName.equalsIgnoreCase("exit")) {
+                break;  // الخروج من الحلقة
+            }
+
+            // تنفيذ السيناريو بناءً على اختيار المستخدم
+            switch (ingredientName.toLowerCase()) {
+                case "tomatoes":
+                    displayPrices("Tomatoes", tomatoPrices);
+                    processOrder("Tomatoes", tomatoPrices, stockLevels);
+                    break;
+                case "olive oil":
+                    displayPrices("Olive Oil", oliveOilPrices);
+                    processOrder("Olive Oil", oliveOilPrices, stockLevels);
+                    break;
+                case "chicken":
+                    displayPrices("Chicken", chickenPrices);
+                    processOrder("Chicken", chickenPrices, stockLevels);
+                    break;
+                default:
+                    System.out.println("Invalid product name: " + ingredientName);
+                    break;
+            }
         }
 
-        // تحديث المخزون للطماطم
-        tomato.setStock(2);  // تعيين المخزون إلى 2 كجم لاختبار التنبيه
-        System.out.println("\nUpdated Stock for Tomatoes: " + tomato.getStock() + " kg");
+        scanner.close();  // غلق الـ Scanner
+    }
 
-        // السيناريو الرابع: مراجعة أمر الشراء من قبل مدير المطبخ
-        System.out.println("\nScenario 4: Kitchen manager manually reviews purchase order.");
-        boolean orderApproved = true; // فرضًا يقوم مدير المطبخ بالموافقة على الطلب
-        if (orderApproved) {
-            System.out.println("Order for Tomatoes approved and sent to the supplier.");
+    // دالة لعرض الأسعار للمكونات من الموردين
+    public static void displayPrices(String ingredientName, Map<String, Double> prices) {
+        System.out.println("-------- Price for " + ingredientName + " --------");
+        prices.forEach((supplier, price) -> {
+            System.out.println("Price from " + supplier + ": $" + price);
+        });
+
+        // تحديد المورد الأفضل بناءً على السعر
+        String bestSupplier = getBestPriceSupplier(prices);
+        System.out.println("Best price supplier for " + ingredientName + ": " + bestSupplier);
+        System.out.println("Preparing purchase order for " + ingredientName + " from " + bestSupplier);
+    }
+
+    // دالة للحصول على أفضل مورد بناءً على السعر الأقل
+    public static String getBestPriceSupplier(Map<String, Double> prices) {
+        return prices.entrySet().stream()
+                .min(Map.Entry.comparingByValue())  // العثور على المورد الذي يقدم أفضل سعر (السعر الأقل)
+                .map(Map.Entry::getKey)
+                .orElse("No supplier found");
+    }
+
+    // دالة لمعالجة الطلبات وإنتاج أمر شراء تلقائي عند انخفاض المخزون
+    public static void processOrder(String ingredientName, Map<String, Double> prices, Map<String, Integer> stockLevels) {
+        // تحقق من مستوى المخزون
+        int stock = stockLevels.getOrDefault(ingredientName, 0);
+        if (stock <= 2) {
+            System.out.println("Stock for " + ingredientName + " is low, auto-generating purchase order...");
+            generateAutoOrder(ingredientName, prices);
         } else {
-            System.out.println("Order for Tomatoes canceled.");
+            System.out.println("Stock for " + ingredientName + " is sufficient.");
         }
+    }
 
-        // السيناريو الخامس: منع تكرار الطلبات للمكونات نفسها
-        System.out.println("\nScenario 5: System prevents duplicate purchase orders.");
-        boolean isDuplicateOrder = false; // فرضًا لا يوجد طلب مكرر
-        if (isDuplicateOrder) {
-            System.out.println("Warning: A purchase order for Tomatoes is already in progress.");
-        } else {
-            System.out.println("No duplicate order detected for Tomatoes.");
-        }
+    // دالة لإنشاء أمر شراء تلقائي
+    public static void generateAutoOrder(String ingredientName, Map<String, Double> prices) {
+        String bestSupplier = getBestPriceSupplier(prices);
+        double price = prices.get(bestSupplier);
+
+        // إعداد أمر الشراء التلقائي
+        System.out.println("Auto-Purchase Order:");
+        System.out.println("- Ingredient: " + ingredientName);
+        System.out.println("- Quantity: 5 liters");
+        System.out.println("- Preferred Supplier: " + bestSupplier + " ($" + price + "/liter)");
+        System.out.println("- Total Cost: $" + (5 * price));
+        System.out.println("Notifying kitchen manager for purchase order approval.");
     }
 }

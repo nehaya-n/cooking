@@ -1,6 +1,6 @@
 package testPackage;
 
-import data.IngredientData1;
+import data.IntegratewithsuppData;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -74,7 +74,7 @@ public class SupplierIntegrationTest {
 
     @Given("the stock level for {string} drops below the critical threshold ({int} liter remaining)")
     public void the_stock_level_for_ingredient_drops_below_critical_threshold(String ingredient, int remainingStock) {
-        IngredientData1.updateStock(ingredient, remainingStock);
+        IntegratewithsuppData.updateStock(ingredient, remainingStock);
         logger.info(WHITE + ingredient + " stock is below the critical threshold: " + remainingStock + " liters remaining." + RESET);
     }
 
@@ -133,4 +133,5 @@ public class SupplierIntegrationTest {
         assertEquals(expectedWarning.trim(), warning.trim());
         logger.info(WHITE + "Displayed warning: " + warning + RESET);
     }
+
 }
