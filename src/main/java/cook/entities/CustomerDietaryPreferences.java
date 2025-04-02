@@ -3,32 +3,24 @@ package cook.entities;
 import java.util.Map;
 
 public class CustomerDietaryPreferences {
-    private String customerName;
-    private Map<String, Boolean> dietaryPreferences; // e.g., Vegetarian, Gluten-Free, etc.
-    private Map<String, String> allergies; // e.g., Peanut Allergy with severity (Severe, Moderate)
+    private Map<String, String> preferences; // Dietary preferences (e.g., Vegetarian, Gluten-Free)
+    private Map<String, String> allergies;  // Allergies (e.g., Peanuts, Shellfish)
+    private boolean preferencesSaved;
 
     // Constructor
-    public CustomerDietaryPreferences(String customerName, Map<String, Boolean> dietaryPreferences, Map<String, String> allergies) {
-        this.customerName = customerName;
-        this.dietaryPreferences = dietaryPreferences;
+    public CustomerDietaryPreferences(Map<String, String> preferences, Map<String, String> allergies) {
+        this.preferences = preferences;
         this.allergies = allergies;
+        this.preferencesSaved = false;
     }
 
     // Getters and Setters
-    public String getCustomerName() {
-        return customerName;
+    public Map<String, String> getPreferences() {
+        return preferences;
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
-
-    public Map<String, Boolean> getDietaryPreferences() {
-        return dietaryPreferences;
-    }
-
-    public void setDietaryPreferences(Map<String, Boolean> dietaryPreferences) {
-        this.dietaryPreferences = dietaryPreferences;
+    public void setPreferences(Map<String, String> preferences) {
+        this.preferences = preferences;
     }
 
     public Map<String, String> getAllergies() {
@@ -37,5 +29,17 @@ public class CustomerDietaryPreferences {
 
     public void setAllergies(Map<String, String> allergies) {
         this.allergies = allergies;
+    }
+
+    public boolean isPreferencesSaved() {
+        return preferencesSaved;
+    }
+
+    public void setPreferencesSaved(boolean preferencesSaved) {
+        this.preferencesSaved = preferencesSaved;
+    }
+
+    public void savePreferences() {
+        this.preferencesSaved = true;
     }
 }
