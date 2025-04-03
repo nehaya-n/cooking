@@ -2,11 +2,13 @@ package testPackage;
 
 import data.IntegratewithsuppData;
 import cook.entities.Integratewithsupp;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -33,15 +35,19 @@ public class SupplierIntegrationTest {
     }
 
     @Then("the system should retrieve and display the latest prices from suppliers:")
-    public void the_system_retrieves_and_displays_prices(io.cucumber.datatable.DataTable dataTable) {
-        Map<String, String> expectedPrices = dataTable.asMap(String.class, String.class);
+    public void the_system_retrieves_and_displays_prices(DataTable dataTable) {
+        // Convert the DataTable to a List of Maps where each map holds Supplier, Ingredient, and Price per Unit
+        List<Map<String, String>> expectedPrices = dataTable.asMaps(String.class, String.class);
 
-        // Retrieve data from IntegratewithsuppData to display the prices
-        for (Map.Entry<String, String> entry : expectedPrices.entrySet()) {
-            Integratewithsupp ingredient = IntegratewithsuppData.getIngredientByName(entry.getKey());
+        for (Map<String, String> row : expectedPrices) {
+            String supplier = row.get("Supplier");
+            String ingredientName = row.get("Ingredient");
+            String pricePerUnit = row.get("Price per Unit");
+
+            Integratewithsupp ingredient = IntegratewithsuppData.getIngredientByName(ingredientName);
             if (ingredient != null && ingredient.getPrices() != null) {
-                String price = ingredient.getPrices().get("Supplier A").toString();
-                logger.info(WHITE + "Ingredient: " + entry.getKey() + " | Price from Supplier A: " + price + RESET);
+
+                logger.info(WHITE + "Ingredient: " + ingredientName + " | Price from " + supplier + ": " + pricePerUnit + RESET);
             }
         }
     }

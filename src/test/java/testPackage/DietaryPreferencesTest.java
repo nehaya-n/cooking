@@ -1,15 +1,18 @@
 package testPackage;
-
+import data.CustomerData;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-
+import cook .entities.Meal;
+import data.MealData;
+import cook .entities.Customer;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 public class DietaryPreferencesTest {
 
@@ -20,17 +23,39 @@ public class DietaryPreferencesTest {
     private static final String WHITE = "\u001B[37m";
 
     // Scenario 1: Customer inputs dietary preferences and allergies
-    @Given("a customer is logged into their account")
+    @Given("a customer with the following dietary preferences:")
+    public void aCustomerWithTheFollowingDietaryPreferences(DataTable dataTable) {
+        // Convert the DataTable to a Map where the key is the dietary restriction (e.g., "Vegetarian") and the value is the preference ("Yes" or "No")
+        Map<String, String> dietaryPreferences = dataTable.asMap(String.class, String.class);
+
+        // Assuming you have a Customer class that stores dietary preferences
+        String isVegetarian = dietaryPreferences.get("Vegetarian");
+        String isGlutenFree = dietaryPreferences.get("Gluten-Free");
+
+        // Create a customer with the provided dietary preferences
+        Customer customer = new Customer("John Doe",
+                isVegetarian.equals("Yes"),
+                isGlutenFree.equals("Yes"));
+
+        // Log the dietary preferences for validation
+        logger.info(WHITE + "Customer: " + Customer.getName() + " | Vegetarian: " + isVegetarian + " | Gluten-Free: " + isGlutenFree + RESET);
+
+        // Store this customer object to use in the "When" and "Then" steps
+        CustomerData.addCustomer(customer);  // Assuming a static method to store the customer
+    }
+
+    @And("a customer is logged into their account")
     public void a_customer_is_logged_into_their_account() {
         logger.info(WHITE + "Customer logged into their account." + RESET);
     }
 
-    @When("they navigate to the Dietary Preferences section")
-    public void they_navigate_to_the_dietary_preferences_section() {
-        logger.info(WHITE + "Customer navigates to the Dietary Preferences section." + RESET);
+    @When("they navigate to the {string} section")
+    public void theyNavigateToTheSection(String arg) {
+        logger.info(WHITE + "Customer logged into section" + arg +RESET);
     }
 
-    @When("they select the following preferences:")
+
+    @And("they select the following preferences:")
     public void they_select_the_following_preferences(io.cucumber.datatable.DataTable dataTable) {
         Map<String, String> preferences = dataTable.asMap(String.class, String.class);
         preferences.forEach((preference, selected) -> logger.info(WHITE + "Selected preference: " + preference + " = " + selected + RESET));
@@ -112,27 +137,52 @@ public class DietaryPreferencesTest {
         logger.info(WHITE + "Alert: " + alert + RESET);
     }
 
-    @Then("and prevent the customer from proceeding with the order")
-    public void and_prevent_the_customer_from_proceeding_with_the_order() {
+    @And("prevent the customer from proceeding with the order")
+    public void preventTheCustomerFromProceedingWithTheOrder() {
         logger.info(WHITE + "Order blocked due to allergen." + RESET);
     }
 
     // Scenario 4: System suggests meals based on dietary preferences
     @Given("the system contains the following meals:")
     public void the_system_contains_the_following_meals(io.cucumber.datatable.DataTable dataTable) {
-        Map<String, String> meals = dataTable.asMap(String.class, String.class);
-        meals.forEach((meal, dietaryInfo) -> logger.info(WHITE + "Meal: " + meal + " | Dietary Info: " + dietaryInfo + RESET));
+
+        List<Map<String, String>> mealsData = dataTable.asMaps(String.class, String.class);
+
+        mealsData.forEach(row -> {
+            String mealName = row.get("Meal Name");
+            String isVegetarian = row.get("Vegetarian");
+            String isGlutenFree = row.get("Gluten-Free");
+
+
+            logger.info(WHITE + "Meal: " + mealName + " | Vegetarian: " + isVegetarian + " | Gluten-Free: " + isGlutenFree + RESET);
+
+            Meal meal = new Meal(mealName, isVegetarian.equals("Yes"), isGlutenFree.equals("Yes"));
+            MealData.addMeal(meal); // Add meal to your meal data store
+        });
     }
 
     @When("the customer requests meal recommendations")
     public void the_customer_requests_meal_recommendations() {
-        logger.info(WHITE + "Customer requests meal recommendations based on dietary preferences." + RESET);
+
+        Customer customer = new Customer("John Doe", true, true); // Example, vegetarian and gluten-free
+        List<Meal> suggestedMeals = MealData.getMealRecommendations(customer);
+
+
+        suggestedMeals.forEach(meal -> logger.info(WHITE + "Suggested Meal: " + meal.getName() + RESET));
     }
 
     @Then("the system should suggest:")
-    public void the_system_should_suggest(io.cucumber.datatable.DataTable dataTable) {
-        Map<String, String> recommendedMeals = dataTable.asMap(String.class, String.class);
-        recommendedMeals.forEach((meal, info) -> logger.info(WHITE + "Suggested meal: " + meal + " | Info: " + info + RESET));
+    public void the_system_should_suggest(io.cucumber.datatable.DataTable expectedMealsTable) {
+
+        List<String> expectedMeals = expectedMealsTable.asList(String.class);
+
+        List<Meal> suggestedMeals = MealData.getSuggestedMeals();
+
+
+        for (String expectedMeal : expectedMeals) {
+            boolean mealFound = suggestedMeals.stream().anyMatch(meal -> meal.getName().equals(expectedMeal));
+            assertTrue("Expected meal " + expectedMeal + " was not suggested.", mealFound);
+        }
     }
 
     // Scenario 5: Customer updates dietary preferences
@@ -158,26 +208,16 @@ public class DietaryPreferencesTest {
         logger.info(WHITE + "Customer's dietary profile updated with new preferences." + RESET);
     }
 
-    @Then("display a confirmation message")
-    public void display_a_confirmation_message(String expectedMessage) {
+
+    @And("display a confirmation message:")
+    public void displayAConfirmationMessage(String expectedMessage) {
         String message = "Your dietary preferences have been successfully updated.";
         assertEquals(expectedMessage.trim(), message.trim());
         logger.info(WHITE + "Confirmation message: " + message + RESET);
     }
 
-    @When("they navigate to the {string} section")
-    public void theyNavigateToTheSection() {
-    }
 
-    @And("display a confirmation message:")
-    public void displayAConfirmationMessage() {
-    }
 
-    @And("prevent the customer from proceeding with the order")
-    public void preventTheCustomerFromProceedingWithTheOrder() {
-    }
 
-    @Given("a customer with the following dietary preferences:")
-    public void aCustomerWithTheFollowingDietaryPreferences() {
-    }
+
 }

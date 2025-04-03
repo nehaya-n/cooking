@@ -37,16 +37,16 @@ public class ReminderTest {
         logger.info(WHITE + "System detected the upcoming delivery." + RESET);
     }
 
-    @Then("the customer should receive a notification")
+    @Then("the customer should receive a notification:")
     public void the_customer_should_receive_a_notification() {
         assertNotNull(receivedNotification);
         logger.info(WHITE + "Notification sent to customer: " + receivedNotification + RESET);
     }
 
     // Scenario 2: Chef receives a notification for a scheduled cooking task
-    @Given("a chef has a scheduled cooking task for {string} at {string}")
-    public void a_chef_has_a_scheduled_cooking_task_for(String dishName, String time) {
-        logger.info(WHITE + "Chef has a scheduled cooking task for " + dishName + " at " + time + "." + RESET);
+    @Given("a chef has a scheduled cooking task for {string} at {int}:{int} AM")
+    public void aChefHasAScheduledCookingTaskForAtAM(String dishName ,int time, int time2) {
+        logger.info(WHITE + "Chef has a scheduled cooking task for " + dishName + " at " + time+":"+time2 + RESET);
     }
 
     @And("the task is due within 30 minutes")
@@ -63,23 +63,21 @@ public class ReminderTest {
         logger.info(WHITE + "System detected the approaching cooking task." + RESET);
     }
 
-    @Then("the chef should receive a notification")
-    public void the_chef_should_receive_a_notification() {
+    @Then("the chef should receive a notification:")
+    public void theChefShouldReceiveANotification() {
         assertNotNull(receivedNotification);
         logger.info(WHITE + "Notification sent to chef: " + receivedNotification + RESET);
     }
-
     // Scenario 3: Customer receives a reminder for a meal subscription order
     @Given("a customer is subscribed to a weekly meal plan")
     public void a_customer_is_subscribed_to_a_weekly_meal_plan() {
         logger.info(WHITE + "Customer is subscribed to a weekly meal plan." + RESET);
     }
 
-    @And("the next delivery is scheduled for tomorrow at {string}")
-    public void the_next_delivery_is_scheduled_for_tomorrow_at(String time) {
-        logger.info(WHITE + "Next delivery is scheduled for tomorrow at " + time + "." + RESET);
+    @And("the next delivery is scheduled for tomorrow at {int}:{int} PM")
+    public void theNextDeliveryIsScheduledForTomorrowAtPM(int time1, int time2) {
+        logger.info(WHITE + "Next delivery is scheduled for tomorrow at " + time1+ ":" +time2+ RESET);
     }
-
     @When("the system detects the upcoming delivery")
     public void the_system_detects_the_upcoming_delivery_for_subscription() {
         receivedNotification = """
@@ -113,7 +111,7 @@ public class ReminderTest {
         logger.info(WHITE + "Chef logged into the system and received the daily task summary." + RESET);
     }
 
-    @Then("they should receive a task summary notification")
+    @Then("they should receive a task summary notification:")
     public void they_should_receive_a_task_summary_notification() {
         assertNotNull(receivedNotification);
         logger.info(WHITE + "Task summary sent to chef: " + receivedNotification + RESET);
@@ -139,36 +137,13 @@ public class ReminderTest {
         logger.info(WHITE + "System detected the delivery status update." + RESET);
     }
 
-    @Then("the customer should receive a notification")
-    public void the_customer_should_receive_a_notification_for_final_confirmation() {
-        assertNotNull(receivedNotification);
-        logger.info(WHITE + "Final confirmation notification sent to customer: " + receivedNotification + RESET);
-    }
 
-    // Fixed parameter usages
     @Then("the customer should receive a reminder {int} hours in advance:")
     public void theCustomerShouldReceiveAReminderHoursInAdvance() {
-        // Use arg0 where needed, or leave empty if not needed
+        assertNotNull(receivedNotification);
+        logger.info(WHITE + "Final confirmation notification sent to customer: " + receivedNotification + RESET);
+
     }
 
-    @Then("they should receive a task summary notification:")
-    public void theyShouldReceiveATaskSummaryNotification() {
-        // Implement the needed functionality here
-    }
 
-    @Then("the customer should receive a notification:")
-    public void theCustomerShouldReceiveANotification() {
-    }
-
-    @Given("a chef has a scheduled cooking task for {string} at {int}:{int} AM")
-    public void aChefHasAScheduledCookingTaskForAtAM() {
-    }
-
-    @Then("the chef should receive a notification:")
-    public void theChefShouldReceiveANotification() {
-    }
-
-    @And("the next delivery is scheduled for tomorrow at {int}:{int} PM")
-    public void theNextDeliveryIsScheduledForTomorrowAtPM() {
-    }
 }
