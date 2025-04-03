@@ -7,14 +7,13 @@ public class Integratewithsupp {
     private int stock;
     private int lowStockThreshold;
     private boolean alertAcknowledged;
-    private Map<String, Double> prices;  // This will store the prices for different suppliers.
+    private final Map<String, Double> prices;
 
     // Constructor
     public Integratewithsupp(String name, int stock, int lowStockThreshold, Map<String, Double> prices) {
         this.name = name;
         this.stock = stock;
         this.lowStockThreshold = lowStockThreshold;
-        this.alertAcknowledged = false;
         this.prices = prices;
     }
 
@@ -32,7 +31,7 @@ public class Integratewithsupp {
     }
 
     public void setStock(int stock) {
-        this.stock = stock;
+        this.stock = stock; // Adding the method to set stock value
     }
 
     public int getLowStockThreshold() {
@@ -40,18 +39,21 @@ public class Integratewithsupp {
     }
 
     public void setLowStockThreshold(int lowStockThreshold) {
-        this.lowStockThreshold = lowStockThreshold;
+        this.lowStockThreshold = lowStockThreshold; // Adding the method to set low stock threshold
     }
 
-    public boolean getAlertAcknowledged() {
+    public boolean isAlertAcknowledged() {
         return alertAcknowledged;
     }
 
     public void setAlertAcknowledged(boolean alertAcknowledged) {
-        this.alertAcknowledged = alertAcknowledged;
+        this.alertAcknowledged = alertAcknowledged; // Adding the method to set alert acknowledgment
     }
 
-    // Returns the supplier with the best price
+    public Map<String, Double> getPrices() {
+        return prices;
+    }
+
     public String getBestPriceSupplier() {
         if (prices == null || prices.isEmpty()) {
             return "No suppliers available";
@@ -60,13 +62,5 @@ public class Integratewithsupp {
                 .min(Map.Entry.comparingByValue())  // Finds the supplier with the minimum price
                 .map(Map.Entry::getKey)
                 .orElse("No supplier found");
-    }
-
-    public Map<String, Double> getPrices() {
-        return prices;
-    }
-
-    public void setPrices(Map<String, Double> prices) {
-        this.prices = prices;
     }
 }
