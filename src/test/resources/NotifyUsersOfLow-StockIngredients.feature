@@ -6,7 +6,7 @@ Feature: Notify Users of Low-Stock Ingredients
   # Scenario 1: Kitchen manager receives an alert when an ingredient reaches the low-stock threshold
   Scenario: Notify kitchen manager of low-stock ingredient
     Given the system monitors ingredient stock levels in real time
-    And the stock level for "Tomatoes" drops below the low-stock threshold (5 kg remaining)
+    And the stock level for "Tomatoes" drops below the low-stock threshold 5 kg remaining
     When the system detects the low-stock status
     Then the kitchen manager should receive a notification:
       """

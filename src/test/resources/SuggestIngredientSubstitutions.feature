@@ -18,7 +18,7 @@ Feature: Suggest Ingredient Substitutions Based on Dietary Restrictions
       """
       Avocado is unavailable. Would you like to use Mashed Peas as a substitute?
       """
-    And the customer can accept or decline the substitution
+
 
   # Scenario 2: System suggests a dietary-friendly alternative
   Scenario: Customer selects an ingredient that conflicts with their dietary restrictions
@@ -30,7 +30,7 @@ Feature: Suggest Ingredient Substitutions Based on Dietary Restrictions
       """
       Cheese is not suitable for a lactose-free diet. Would you like to replace it with Vegan Cheese?
       """
-    And the customer can accept or decline the substitution
+
 
   # Scenario 3: Chef receives an alert for ingredient substitution
   Scenario: Chef is notified when an ingredient substitution is applied
@@ -57,7 +57,7 @@ Feature: Suggest Ingredient Substitutions Based on Dietary Restrictions
       - Regular Milk → Almond Milk
       Please confirm before proceeding with your order.
       """
-    And the customer can accept or modify the substitutions
+
 
   # Scenario 5: System prevents substitutions that conflict with multiple dietary restrictions
   Scenario: System prevents an invalid substitution
