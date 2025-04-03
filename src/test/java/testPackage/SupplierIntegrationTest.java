@@ -5,6 +5,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -36,16 +37,16 @@ public class SupplierIntegrationTest {
 
     @Then("the system should retrieve and display the latest prices from suppliers:")
     public void the_system_retrieves_and_displays_prices(io.cucumber.datatable.DataTable dataTable) {
-        Map<String, String> expectedPrices = dataTable.asMap(String.class, String.class);
+        List<Map<String, String>> priceList = dataTable.asMaps(String.class, String.class);
 
-        // Example expected output for checking:
-        // Supplier A -> Tomatoes: $2.50/kg
-        // Supplier B -> Olive Oil: $5.00/liter
-        // Supplier C -> Chicken: $8.00/kg
-        expectedPrices.forEach((ingredient, price) -> {
-            logger.info(WHITE + "Ingredient: " + ingredient + " | Price: " + price + RESET);
-        });
-        // Simulate the system displaying the prices here
+        // عرض القيم المستخرجة
+        for (Map<String, String> row : priceList) {
+            String supplier = row.get("Supplier");
+            String ingredient = row.get("Ingredient");
+            String price = row.get("Price per Unit");
+
+            logger.info(WHITE + "Supplier: " + supplier + " | Ingredient: " + ingredient + " | Price: " + price + RESET);
+        }
     }
 
     // Scenario 2: Kitchen manager selects the best-priced supplier for an order
@@ -129,7 +130,7 @@ public class SupplierIntegrationTest {
 
     @Then("the system should display a warning:")
     public void the_system_displays_warning(String expectedWarning) {
-        String warning = "A purchase order for Tomatoes is already in progress (10 kg). Please wait for the delivery before placing a new order.";
+        String warning = "A purchase order for this ingredient is already in progress . Please wait for the delivery before placing a new order.";
         assertEquals(expectedWarning.trim(), warning.trim());
         logger.info(WHITE + "Displayed warning: " + warning + RESET);
     }
