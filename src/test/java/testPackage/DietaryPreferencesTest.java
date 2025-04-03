@@ -4,9 +4,12 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+
 import java.util.Map;
 import java.util.logging.Logger;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class DietaryPreferencesTest {
 
@@ -30,17 +33,13 @@ public class DietaryPreferencesTest {
     @When("they select the following preferences:")
     public void they_select_the_following_preferences(io.cucumber.datatable.DataTable dataTable) {
         Map<String, String> preferences = dataTable.asMap(String.class, String.class);
-        preferences.forEach((preference, selected) -> {
-            logger.info(WHITE + "Selected preference: " + preference + " = " + selected + RESET);
-        });
+        preferences.forEach((preference, selected) -> logger.info(WHITE + "Selected preference: " + preference + " = " + selected + RESET));
     }
 
     @When("they enter the following allergies:")
     public void they_enter_the_following_allergies(io.cucumber.datatable.DataTable dataTable) {
         Map<String, String> allergies = dataTable.asMap(String.class, String.class);
-        allergies.forEach((allergy, severity) -> {
-            logger.info(WHITE + "Entered allergy: " + allergy + " with severity: " + severity + RESET);
-        });
+        allergies.forEach((allergy, severity) -> logger.info(WHITE + "Entered allergy: " + allergy + " with severity: " + severity + RESET));
     }
 
     @When("they save their preferences")
@@ -81,17 +80,13 @@ public class DietaryPreferencesTest {
     @Then("the system should display the following preferences:")
     public void the_system_should_display_the_following_preferences(io.cucumber.datatable.DataTable dataTable) {
         Map<String, String> preferences = dataTable.asMap(String.class, String.class);
-        preferences.forEach((preference, selected) -> {
-            logger.info(WHITE + "Preference: " + preference + " = " + selected + RESET);
-        });
+        preferences.forEach((preference, selected) -> logger.info(WHITE + "Preference: " + preference + " = " + selected + RESET));
     }
 
     @Then("the system should display the following allergies:")
     public void the_system_should_display_the_following_allergies(io.cucumber.datatable.DataTable dataTable) {
         Map<String, String> allergies = dataTable.asMap(String.class, String.class);
-        allergies.forEach((allergy, severity) -> {
-            logger.info(WHITE + "Allergy: " + allergy + " with severity: " + severity + RESET);
-        });
+        allergies.forEach((allergy, severity) -> logger.info(WHITE + "Allergy: " + allergy + " with severity: " + severity + RESET));
     }
 
     // Scenario 3: System prevents customers from ordering meals with allergens
@@ -126,9 +121,7 @@ public class DietaryPreferencesTest {
     @Given("the system contains the following meals:")
     public void the_system_contains_the_following_meals(io.cucumber.datatable.DataTable dataTable) {
         Map<String, String> meals = dataTable.asMap(String.class, String.class);
-        meals.forEach((meal, dietaryInfo) -> {
-            logger.info(WHITE + "Meal: " + meal + " | Dietary Info: " + dietaryInfo + RESET);
-        });
+        meals.forEach((meal, dietaryInfo) -> logger.info(WHITE + "Meal: " + meal + " | Dietary Info: " + dietaryInfo + RESET));
     }
 
     @When("the customer requests meal recommendations")
@@ -139,26 +132,20 @@ public class DietaryPreferencesTest {
     @Then("the system should suggest:")
     public void the_system_should_suggest(io.cucumber.datatable.DataTable dataTable) {
         Map<String, String> recommendedMeals = dataTable.asMap(String.class, String.class);
-        recommendedMeals.forEach((meal, info) -> {
-            logger.info(WHITE + "Suggested meal: " + meal + " | Info: " + info + RESET);
-        });
+        recommendedMeals.forEach((meal, info) -> logger.info(WHITE + "Suggested meal: " + meal + " | Info: " + info + RESET));
     }
 
     // Scenario 5: Customer updates dietary preferences
     @Given("a customer has the following stored preferences:")
     public void a_customer_has_the_following_stored_preferences(io.cucumber.datatable.DataTable dataTable) {
         Map<String, String> storedPreferences = dataTable.asMap(String.class, String.class);
-        storedPreferences.forEach((preference, selected) -> {
-            logger.info(WHITE + "Stored preference: " + preference + " = " + selected + RESET);
-        });
+        storedPreferences.forEach((preference, selected) -> logger.info(WHITE + "Stored preference: " + preference + " = " + selected + RESET));
     }
 
     @When("the customer updates their preferences to:")
     public void the_customer_updates_their_preferences_to(io.cucumber.datatable.DataTable updatedDataTable) {
         Map<String, String> updatedPreferences = updatedDataTable.asMap(String.class, String.class);
-        updatedPreferences.forEach((preference, selected) -> {
-            logger.info(WHITE + "Updated preference: " + preference + " = " + selected + RESET);
-        });
+        updatedPreferences.forEach((preference, selected) -> logger.info(WHITE + "Updated preference: " + preference + " = " + selected + RESET));
     }
 
     @When("saves the changes")
@@ -179,7 +166,7 @@ public class DietaryPreferencesTest {
     }
 
     @When("they navigate to the {string} section")
-    public void theyNavigateToTheSection(String arg0) {
+    public void theyNavigateToTheSection() {
     }
 
     @And("display a confirmation message:")

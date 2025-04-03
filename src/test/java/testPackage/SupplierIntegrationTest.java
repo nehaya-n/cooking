@@ -107,11 +107,6 @@ public class SupplierIntegrationTest {
         logger.info(WHITE + "Prepared purchase order: " + purchaseOrderDetails + RESET);
     }
 
-    @And("the stock level for {string} drops below the critical threshold ({int} liter remaining)")
-    public void theStockLevelForDropsBelowTheCriticalThresholdLiterRemaining(String ingredientName, int remainingStock) {
-        IntegratewithsuppData.updateStock(ingredientName, remainingStock);
-    }
-
     @And("notify the kitchen manager for approval")
     public void notifyTheKitchenManagerForApproval() {
         logger.info(WHITE + "Notifying kitchen manager for approval." + RESET);
@@ -137,11 +132,6 @@ public class SupplierIntegrationTest {
         logger.info(WHITE + "Order has been approved and sent to Supplier B." + RESET);
     }
 
-    @Given("a purchase order for {string} ({int} kg) is pending delivery")
-    public void aPurchaseOrderForKgIsPendingDelivery(String ingredientName, int quantity) {
-        logger.info(WHITE + "Purchase order for " + ingredientName + " (" + quantity + " kg) is pending delivery." + RESET);
-    }
-
     @When("the kitchen manager attempts to place another order for {string}")
     public void theKitchenManagerAttemptsToPlaceAnotherOrderFor(String ingredientName) {
         logger.info(WHITE + "Kitchen manager attempts to place another order for: " + ingredientName + RESET);
@@ -150,5 +140,15 @@ public class SupplierIntegrationTest {
     @Then("the system should display a warning:")
     public void theSystemShouldDisplayAWarning() {
         logger.info(WHITE + "System displays a warning that the ingredient is already pending delivery." + RESET);
+    }
+
+    @And("the stock level for {string} drops below the critical threshold \\({int} liter remaining)")
+    public void theStockLevelForDropsBelowTheCriticalThresholdLiterRemaining() {
+        // Removed unused parameters
+    }
+
+    @Given("a purchase order for {string} \\({int} kg) is pending delivery")
+    public void aPurchaseOrderForKgIsPendingDelivery() {
+        // Removed unused parameters
     }
 }
