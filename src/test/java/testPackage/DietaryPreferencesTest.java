@@ -1,5 +1,6 @@
 package testPackage;
 
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -175,5 +176,21 @@ public class DietaryPreferencesTest {
         String message = "Your dietary preferences have been successfully updated.";
         assertEquals(expectedMessage.trim(), message.trim());
         logger.info(WHITE + "Confirmation message: " + message + RESET);
+    }
+
+    @When("they navigate to the {string} section")
+    public void theyNavigateToTheSection(String arg0) {
+    }
+
+    @And("display a confirmation message:")
+    public void displayAConfirmationMessage() {
+    }
+
+    @And("prevent the customer from proceeding with the order")
+    public void preventTheCustomerFromProceedingWithTheOrder() {
+    }
+
+    @Given("a customer with the following dietary preferences:")
+    public void aCustomerWithTheFollowingDietaryPreferences() {
     }
 }
