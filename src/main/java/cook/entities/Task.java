@@ -2,7 +2,7 @@ package cook.entities;
 
 public class Task {
     private String dishName;
-    private String dueTime;
+    public String dueTime;
     private String assignedChef;
 
     public Task(String dishName, String dueTime, String assignedChef) {
@@ -11,7 +11,7 @@ public class Task {
         this.assignedChef = assignedChef;
     }
 
-    // Getter و Setter
+
     public String getDishName() {
         return dishName;
     }
@@ -20,13 +20,6 @@ public class Task {
         this.dishName = dishName;
     }
 
-    public String getDueTime() {
-        return dueTime;
-    }
-
-    public void setDueTime(String dueTime) {
-        this.dueTime = dueTime;
-    }
 
     public String getAssignedChef() {
         return assignedChef;

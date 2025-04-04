@@ -36,10 +36,10 @@ public class CustomMealData {
                 new Ingredient("Broccoli", true),
                 new Ingredient("Garlic Sauce", true)
         );
-        customMeals.add(new CustomMeal("Healthy Chicken Bowl", mealIngredients1));
+        customMeals.add(new CustomMeal("Healthy Chicken Bowl"));
     }
 
-    // Adds a custom meal to the list
+
     public static void addCustomMeal(CustomMeal customMeal) {
         customMeals.add(customMeal);
     }

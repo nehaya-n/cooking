@@ -1,30 +1,53 @@
 package cook.entities;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+
 
 public class CustomMeal {
-    private String name;
-    private List<Ingredient> ingredients;
 
-    public CustomMeal(String name, List<Ingredient> ingredients) {
-        this.name = name;
-        this.ingredients = ingredients;
+    public String mealName;
+    public Set<String> ingredients;
+    private boolean saved;
+
+    public CustomMeal(String mealName) {
+        this.mealName = mealName;
+        this.ingredients = new HashSet<>();
+        this.saved = false;
     }
 
-    // Getter and Setter
-    public String getName() {
-        return name;
+    public void addIngredient(String ingredient) {
+        ingredients.add(ingredient);
+
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void removeIngredient(String ingredient) {
+        ingredients.remove(ingredient);
+
     }
 
-    public List<Ingredient> getIngredients() {
+    public boolean containsIngredient(String ingredient) {
+        return ingredients.contains(ingredient);
+    }
+
+    public void saveMeal() {
+        this.saved = true;
+
+    }
+
+    public boolean isSaved() {
+        return saved;
+    }
+/*
+    public String getMealName() {
+        return mealName;
+    }
+
+    public Set<String> getIngredients() {
         return ingredients;
     }
-
-    public void setIngredients(List<Ingredient> ingredients) {
-        this.ingredients = ingredients;
+*/
+    public String getName() {
+        return mealName;
     }
 }

@@ -1,66 +1,57 @@
 package testPackage;
 
-import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
+import cook.entities.CustomMeal;
+import io.cucumber.java.en.*;
+import java.util.logging.Logger;
 import static org.junit.Assert.*;
 
 public class CustomMealRequestTest {
+    private static final Logger logger = Logger.getLogger(CustomMealRequestTest.class.getName());
 
-    private String customerMeal;
-    private boolean isIngredientAvailable;
+
+    private CustomMeal customMeal;
     private String errorMessage;
-    private String confirmationMessage;
-
-    // Scenario 1: Customer creates a custom meal
+    private boolean isIngredientAvailable = true;
+    //Scenario 1: Customer creates a custom meal
     @Given("a customer is logged into their account")
     public void customer_is_logged_in() {
-        // Simulate customer login
-        System.out.println("Customer is logged in.");
+        logger.info("Customer is logged in.");
     }
 
     @And("they navigate to the \"Create Your Meal\" section")
     public void navigate_to_create_meal_section() {
-        // Simulate navigating to the create meal section
-        System.out.println("Navigated to 'Create Your Meal' section.");
+        logger.info("Navigated to 'Create Your Meal' section.");
     }
 
     @When("they select the following ingredients:")
     public void customer_selects_ingredients(io.cucumber.datatable.DataTable dataTable) {
-        // Simulate the customer selecting ingredients
-        System.out.println("Customer selected the following ingredients:");
-        dataTable.asList().forEach(System.out::println);
+        customMeal = new CustomMeal("Healthy Chicken Bowl");
+        dataTable.asList().forEach(customMeal::addIngredient);
     }
 
     @And("they save the meal as \"Healthy Chicken Bowl\"")
     public void save_custom_meal() {
-        // Simulate saving the custom meal
-        customerMeal = "Healthy Chicken Bowl";
-        confirmationMessage = "Your custom meal \"Healthy Chicken Bowl\" has been created successfully!";
+        customMeal.saveMeal();
     }
 
     @Then("the system should confirm the meal creation with a message:")
     public void system_confirms_meal_creation() {
-        assertEquals("Your custom meal \"Healthy Chicken Bowl\" has been created successfully!", confirmationMessage);
+        assertTrue(customMeal.isSaved());
     }
 
     @And("the meal should be available in the customer's saved meals")
     public void meal_is_available_in_saved_meals() {
-        // Simulate the meal being available in the saved meals
-        assertNotNull(customerMeal);
+        assertNotNull(customMeal);
     }
 
-    // Scenario 2: System validates ingredient availability
+    // Scenario 2: Ingredient availability check
     @Given("a customer is creating a custom meal")
     public void customer_is_creating_custom_meal() {
-        // Simulate creating a custom meal
-        System.out.println("Customer is creating a custom meal.");
+        customMeal = new CustomMeal("Custom Meal");
     }
 
     @And("the following ingredients are out of stock:")
     public void ingredients_out_of_stock(io.cucumber.datatable.DataTable dataTable) {
-        // Simulate checking for out of stock ingredients
         dataTable.asList().forEach(ingredient -> {
             if (ingredient.equals("Avocado")) {
                 isIngredientAvailable = false;
@@ -80,22 +71,22 @@ public class CustomMealRequestTest {
         assertEquals("Sorry, Avocado is currently unavailable. Please choose a different ingredient.", errorMessage);
     }
 
-    // Scenario 3: System prevents incompatible ingredient combinations
+    // Scenario 3: Incompatible ingredient combinations
     @Given("the system has predefined incompatible ingredient combinations:")
     public void predefined_incompatible_ingredient_combinations(io.cucumber.datatable.DataTable dataTable) {
-        // Simulate the predefined incompatible ingredient combinations
         dataTable.asList().forEach(combination -> {
             if (combination.equals("Milk and Lemon Juice")) {
-                isIngredientAvailable = false;
                 errorMessage = "The combination of Milk and Lemon Juice is not allowed. Please modify your selection.";
+            } else if (combination.equals("Pineapple and Soy Sauce")) {
+                errorMessage = "The combination of Pineapple and Soy Sauce is not allowed. Please modify your selection.";
+
             }
         });
     }
 
     @When("a customer selects \"Milk\" and \"Lemon Juice\" together")
     public void customer_selects_incompatible_ingredients() {
-        // Check if the selected ingredients are incompatible
-        if (!isIngredientAvailable) {
+        if (customMeal.containsIngredient("Milk") && customMeal.containsIngredient("Lemon Juice")) {
             errorMessage = "The combination of Milk and Lemon Juice is not allowed. Please modify your selection.";
         }
     }
@@ -105,60 +96,48 @@ public class CustomMealRequestTest {
         assertEquals("The combination of Milk and Lemon Juice is not allowed. Please modify your selection.", errorMessage);
     }
 
-    // Scenario 4: Customer modifies a custom meal before ordering
+    // Scenario 4: Modify a saved meal
     @Given("a customer has a saved custom meal \"Healthy Chicken Bowl\" with the ingredients:")
     public void customer_has_saved_custom_meal(io.cucumber.datatable.DataTable dataTable) {
-        // Simulate customer having a saved meal
-        customerMeal = "Healthy Chicken Bowl";
-        System.out.println("Saved meal: " + customerMeal);
-        dataTable.asList().forEach(System.out::println);
+        customMeal = new CustomMeal("Healthy Chicken Bowl");
+        dataTable.asList().forEach(customMeal::addIngredient);
     }
 
     @When("the customer removes \"Garlic Sauce\"")
     public void customer_removes_ingredient() {
-        // Simulate removing Garlic Sauce
-        System.out.println("Customer removes Garlic Sauce.");
+        customMeal.removeIngredient("Garlic Sauce");
     }
 
     @And("adds \"Tahini Sauce\" instead")
     public void customer_adds_ingredient() {
-        // Simulate adding Tahini Sauce
-        System.out.println("Customer adds Tahini Sauce.");
+        customMeal.addIngredient("Tahini Sauce");
     }
 
     @And("saves the changes")
     public void save_changes() {
-        // Simulate saving changes
-        confirmationMessage = "Your custom meal \"Healthy Chicken Bowl\" has been updated successfully.";
+        customMeal.saveMeal();
     }
 
     @Then("the system should update the custom meal with the new ingredients")
     public void system_updates_custom_meal() {
-        assertEquals("Your custom meal \"Healthy Chicken Bowl\" has been updated successfully.", confirmationMessage);
+        assertTrue(customMeal.isSaved());
     }
 
-    @And("display a confirmation message:")
-    public void display_confirmation_message() {
-        System.out.println(confirmationMessage);
-    }
-
-    // Scenario 5: Customer orders a custom meal
+    // Scenario 5: Order a custom meal
     @Given("a customer has a saved custom meal \"Healthy Chicken Bowl\"")
     public void customer_has_saved_order_meal() {
-        // Simulate customer having a saved meal
-        customerMeal = "Healthy Chicken Bowl";
+        customMeal = new CustomMeal("Healthy Chicken Bowl");
+        customMeal.saveMeal();
     }
 
     @When("they add \"Healthy Chicken Bowl\" to the cart")
     public void add_meal_to_cart() {
-        // Simulate adding meal to cart
-        System.out.println("Meal added to cart.");
+        logger.info("Meal added to cart.");
     }
 
     @And("proceed to checkout")
     public void proceed_to_checkout() {
-        // Simulate proceeding to checkout
-        System.out.println("Proceeding to checkout.");
+        logger.info("Proceeding to checkout.");
     }
 
     @Then("the system should confirm the order with a message:")
