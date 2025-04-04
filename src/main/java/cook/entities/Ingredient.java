@@ -34,6 +34,9 @@ public class Ingredient {
     public void setStock(int stock) {
         this.stock = stock;
     }
+    public void setName(String name) {
+        this.name = name;
+    }
 
     /*
        public void setLowStockThreshold(int lowStockThreshold) {

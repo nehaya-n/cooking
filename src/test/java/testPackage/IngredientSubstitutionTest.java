@@ -6,7 +6,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-
+import cook.entities.CustomMeal;
 import java.util.logging.Logger;
 
 import static org.junit.Assert.*;
@@ -22,18 +22,22 @@ public class IngredientSubstitutionTest {
     //Scenario 1: System suggests an alternative for an unavailable ingredient
     @Given("a customer is creating a custom meal")
     public void a_customer_is_creating_a_custom_meal() {
-        // Simulate customer creating a custom meal (this can be expanded with additional logic)
+        CustomMeal  customMeal = new CustomMeal("Healthy Salad");
+
+        Ingredient avocado = new Ingredient("Avocado", 0 ,3); // Avocado is unavailable
+        customMeal.addIngredient(String.valueOf(avocado));
+        logger.info("Customer is creating a custom meal: " + customMeal);
     }
 
     @And("the following ingredient is out of stock:")
     public void theFollowingIngredientIsOutOfStock() {
-        // Assume ingredients data is initialized with some stock, and we'll set one ingredient to be out of stock
-        IngredientSubstitutionData.updateStock("Avocado", 0); // Out of stock scenario
+
+        IngredientSubstitutionData.updateStock("Avocado", 0);
     }
 
     @When("the customer selects {string}")
     public void theCustomerSelects(String ingredient) {
-        // Simulate customer selecting an ingredient
+
         Ingredient ingredientSelected = IngredientSubstitutionData.getIngredientByName(ingredient);
         assertNotNull("Ingredient should be available", ingredientSelected);
     }
@@ -102,6 +106,15 @@ public class IngredientSubstitutionTest {
         // Example of substitutions a customer may request (e.g., Butter → Olive Oil, Milk → Almond Milk)
         String[] originalIngredients = {"Butter", "Milk"};
         String[] substitutedIngredients = {"Olive Oil", "Almond Milk"};
+        CustomMeal customMeal = new CustomMeal("Custom Salad");
+        customMeal.addIngredient("Butter");
+        customMeal.addIngredient("Milk");
+
+        for (int i = 0; i < originalIngredients.length; i++) {
+            customMeal.replaceIngredient(originalIngredients[i], substitutedIngredients[i]);
+        }
+
+
     }
 
     @When("the customer proceeds to checkout")
