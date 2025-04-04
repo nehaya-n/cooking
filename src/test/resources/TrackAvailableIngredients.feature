@@ -20,8 +20,7 @@ Feature: Track Available Ingredients and Suggest Restocking
 
   # Scenario 2: System detects low stock and suggests restocking
   Scenario: System identifies low-stock ingredients and recommends restocking
-    Given the system monitors ingredient stock levels in real time
-    And the restocking threshold for "Tomatoes" is 6 kg
+    Given the restocking threshold for "Tomatoes" is 6 kg
     When the stock level of "Tomatoes" drops to 5 kg
     Then the system should generate a restocking alert:
       """

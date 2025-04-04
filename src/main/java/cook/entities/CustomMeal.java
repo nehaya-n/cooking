@@ -2,7 +2,6 @@ package cook.entities;
 
 import java.util.HashSet;
 import java.util.Set;
-import cook.entities.Ingredient;
 
 public class CustomMeal {
 
@@ -44,15 +43,7 @@ public class CustomMeal {
     public boolean isSaved() {
         return saved;
     }
-    /*
-        public String getMealName() {
-            return mealName;
-        }
 
-        public Set<String> getIngredients() {
-            return ingredients;
-        }
-    */
     public String getName() {
         return mealName;
     }

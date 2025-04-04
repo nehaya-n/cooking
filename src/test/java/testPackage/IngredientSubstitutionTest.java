@@ -103,7 +103,7 @@ public class IngredientSubstitutionTest {
    // Scenario 4: Customer reviews ingredient substitutions before checkout
     @Given("a customer has requested ingredient substitutions:")
     public void aCustomerHasRequestedIngredientSubstitutions() {
-        // Example of substitutions a customer may request (e.g., Butter → Olive Oil, Milk → Almond Milk)
+
         String[] originalIngredients = {"Butter", "Milk"};
         String[] substitutedIngredients = {"Olive Oil", "Almond Milk"};
         CustomMeal customMeal = new CustomMeal("Custom Salad");
