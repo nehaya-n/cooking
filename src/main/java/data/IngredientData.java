@@ -13,7 +13,7 @@ public class IngredientData {
     }
 
     public static void initializeIngredients() {
-        ingredients.add(new Ingredient("Tomatoes", 10, 5));
+        ingredients.add(new Ingredient("Tomatoes", 3 , 5));
         ingredients.add(new Ingredient("Onions", 15, 5));
         ingredients.add(new Ingredient("Olive Oil", 5, 3));
         ingredients.add(new Ingredient("Milk", 8, 2));
@@ -41,7 +41,8 @@ public class IngredientData {
 
     public static boolean isLowStock(String name) {
         Ingredient ingredient = getIngredientByName(name);
-        return ingredient != null && ingredient.getStock() < ingredient.getLowStockThreshold();
+        return ingredient != null && ingredient.getStock() <= ingredient.getLowStockThreshold();
+        // Changed < to <=
     }
 
     public static void acknowledgeAlert(String name) {

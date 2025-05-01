@@ -38,11 +38,12 @@ public class Ingredient {
         this.name = name;
     }
 
-    /*
+    /***
        public void setLowStockThreshold(int lowStockThreshold) {
         this.lowStockThreshold = lowStockThreshold;
        }
-      */
+      ***/
+
 
     public void acknowledgeAlert() {
         this.alertAcknowledged = true;

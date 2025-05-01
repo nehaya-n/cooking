@@ -26,11 +26,7 @@ Feature: Notify Users of Low-Stock Ingredients
 
   # Scenario 3: System suggests an automatic restock order when multiple ingredients are low
   Scenario: System suggests a restock order for multiple low-stock ingredients
-    Given the following ingredients are below the low-stock threshold:
-      | Ingredient  | Current Stock | Threshold |
-      | Tomatoes    | 3 kg          | 5 kg      |
-      | Onions      | 2 kg          | 5 kg      |
-      | Olive Oil   | 1 liter       | 3 liters  |
+    Given the following ingredients are below the low-stock threshold: Tomatoes, Onions, Olive Oil
     When the system detects the low-stock status
     Then the kitchen manager should receive a restock recommendation:
       """

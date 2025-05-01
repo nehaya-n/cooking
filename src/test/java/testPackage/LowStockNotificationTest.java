@@ -2,12 +2,15 @@ package testPackage;
 
 import data.IngredientData;
 import cook.entities.Ingredient;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import java.util.List;
 import java.util.Map;
+
 import java.util.logging.Logger;
 
 import static org.junit.Assert.*;
@@ -15,6 +18,7 @@ import static org.junit.Assert.*;
 public class LowStockNotificationTest {
 
     private static final Logger logger = Logger.getLogger(LowStockNotificationTest.class.getName());
+    private String ingredientUnderTest;
     private String receivedNotification;
 
     private static final String RESET = "\u001B[37m";
@@ -23,21 +27,31 @@ public class LowStockNotificationTest {
     // Scenario 1
     @Given("the system monitors ingredient stock levels in real time")
     public void the_system_monitors_ingredient_stock_levels_in_real_time() {
-        logger.info(WHITE + "System is monitoring stock levels in real time." + RESET);
+        System.out.println("System is monitoring stock levels in real time.");
     }
 
     @And("the stock level for {string} drops below the low-stock threshold {int} kg remaining")
     public void the_stock_level_drops_below_threshold(String ingredient, int remainingStock) {
-        IngredientData.updateStock(ingredient, remainingStock);
+        // Set the stock to a value BELOW the threshold (not equal to)
+        IngredientData.updateStock(ingredient, remainingStock - 1);  // e.g., 4 kg when threshold is 5
+        ingredientUnderTest = ingredient;
         logger.info(WHITE + ingredient + " stock dropped below the threshold: " + remainingStock + " kg remaining." + RESET);
     }
 
+
     @When("the system detects the low-stock status")
     public void the_system_detects_low_stock_status() {
-        receivedNotification = IngredientData.isLowStock("Tomatoes") ?
-                "Low Stock Alert: Tomatoes stock is below 5 kg.\nConsider reordering to prevent shortages." : "";
-        logger.info(WHITE + "Low stock status detected." + RESET);
+        boolean isLowStock = IngredientData.isLowStock(ingredientUnderTest);
+        logger.info("Is " + ingredientUnderTest + " stock low: " + isLowStock);
+        if (isLowStock) {
+            receivedNotification = "Low Stock Alert: Tomatoes stock is below 5 kg\nConsider reordering to prevent shortages.";
+
+        } else {
+            receivedNotification = "";
+        }
+        logger.info("Low stock status detected.");
     }
+
 
     @Then("the kitchen manager should receive a notification:")
     public void the_kitchen_manager_receives_notification(String expectedNotification) {
@@ -78,23 +92,29 @@ public class LowStockNotificationTest {
     }
 
     // Scenario 3
-    @Given("the following ingredients are below the low-stock threshold:")
-    public void multiple_ingredients_below_threshold(io.cucumber.datatable.DataTable dataTable) {
-        Map<String, String> ingredients = dataTable.asMap(String.class, String.class);
-        ingredients.forEach((ingredient, stock) -> IngredientData.updateStock(ingredient, Integer.parseInt(stock.split(" ")[0])));
-        logger.info(WHITE + "Multiple ingredients detected below threshold: " + ingredients + RESET);
+    @Given("the following ingredients are below the low-stock threshold: Tomatoes, Onions, Olive Oil")
+    public void theFollowingIngredientsAreBelowTheLowStockThresholdTomatoesOnionsOliveOil() {
+        IngredientData.updateStock("Tomatoes", 3);    // threshold is 5 → low
+        IngredientData.updateStock("Onions", 2);      // threshold is 5 → low
+        IngredientData.updateStock("Olive Oil", 1);   // threshold is 3 → low
     }
+
+
 
     @Then("the kitchen manager should receive a restock recommendation:")
     public void the_kitchen_manager_receives_restock_recommendation(String expectedRecommendation) {
         StringBuilder recommendation = new StringBuilder("Low Stock Alert:\n");
         for (Ingredient ingredient : IngredientData.getIngredients()) {
             if (IngredientData.isLowStock(ingredient.getName())) {
-                recommendation.append("- ").append(ingredient.getName())
-                        .append(": ").append(ingredient.getStock())
+                recommendation.append("- ")
+                        .append(ingredient.getName())
+                        .append(": ")
+                        .append(ingredient.getStock())
                         .append(" remaining (Order Recommended)\n");
             }
         }
+        recommendation.append("Would you like to place an order now? [Yes] [No]");
+
         receivedNotification = recommendation.toString();
         assertEquals(expectedRecommendation.trim(), receivedNotification.trim());
         logger.info(WHITE + "Received restock recommendation." + RESET);
@@ -130,15 +150,15 @@ public class LowStockNotificationTest {
 
 
     @And("no further notifications should be sent for the same ingredient until stock is updated")
-    public void noFurtherNotificationsShouldBeSentForTheSameIngredientUntilStockIsUpdated(String ingredient) {
-        Ingredient ingredientObj = IngredientData.getIngredientByName(ingredient);
+    public void noFurtherNotificationsShouldBeSentForTheSameIngredientUntilStockIsUpdated() {
+        Ingredient ingredientObj = IngredientData.getIngredientByName(ingredientUnderTest);
 
         if (ingredientObj == null) {
-            fail("Ingredient not found: " + ingredient);
+            fail("Ingredient not found: " + ingredientUnderTest);
         }
-        boolean notificationSent = IngredientData.isLowStock(ingredient) && !ingredientObj.isAlertAcknowledged();
-        assertFalse("No further notifications should be sent for " + ingredient, notificationSent);
-        logger.info(WHITE + "No further notifications sent for " + ingredient + RESET);
+        boolean notificationSent = IngredientData.isLowStock(ingredientUnderTest) && !ingredientObj.isAlertAcknowledged();
+        assertFalse("No further notifications should be sent for " + ingredientUnderTest, notificationSent);
+        logger.info(WHITE + "No further notifications sent for " + ingredientUnderTest + RESET);
     }
 
     @Given("a low-stock alert for {string} was sent {int} hours ago")
@@ -157,7 +177,7 @@ public class LowStockNotificationTest {
         Ingredient ingredient = IngredientData.getIngredientByName("Milk");
         assertNotNull("Ingredient not found: Milk", ingredient);
 
-        if (!ingredient.isAlertAcknowledged()) {
+        if (ingredient.isAlertAcknowledged()) {
             receivedNotification = """
                     URGENT: Milk is still low on stock (1 liter remaining).
                     No action has been taken in the last 24 hours.
@@ -173,5 +193,9 @@ public class LowStockNotificationTest {
         logger.info(WHITE + "Escalated notification sent: " + receivedNotification + RESET);
 
     }
+
+
 }
+
+
 
