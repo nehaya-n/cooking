@@ -10,10 +10,7 @@ Feature: Suggest Ingredient Substitutions Based on Dietary Restrictions
   # Scenario 1: System suggests an alternative for an unavailable ingredient
   Scenario: Customer selects an unavailable ingredient
     Given a customer is creating a custom meal
-    And the following ingredient is out of stock:
-      | Avocado     | 0      |
-      | Tomato      | 5      |
-      | Onion       | 0      |
+    And the following ingredient is out of stock: "Avocado"
     When the customer selects "Avocado"
     Then the system should suggest an alternative ingredient:
       """
