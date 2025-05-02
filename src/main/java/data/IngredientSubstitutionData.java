@@ -36,7 +36,7 @@ public class IngredientSubstitutionData {
     }
 
     public static String generateChefNotification(String originalIngredient, String substitutedIngredient) {
-        return "Customer has requested a substitution: " + originalIngredient + " → " + substitutedIngredient + ". Please review and approve the modification.";
+        return "Customer has requested a substitution: " + originalIngredient + " → " + substitutedIngredient + " Please review and approve the modification";
     }
 
     public static String generateSubstitutionSummary(String[] originalIngredients, String[] substitutedIngredients) {

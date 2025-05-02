@@ -1,8 +1,5 @@
 package testPackage;
 
-import data.IngredientData;
-import cook.entities.Ingredient;
-
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -11,6 +8,9 @@ import io.cucumber.java.en.When;
 
 import java.util.Map;
 import java.util.logging.Logger;
+
+import cook.entities.Ingredient;
+import data.IngredientData;
 
 import static org.junit.Assert.*;
 
@@ -43,7 +43,7 @@ public class LowStockNotificationTest {
         boolean isLowStock = IngredientData.isLowStock(ingredientUnderTest);
         logger.info("Is " + ingredientUnderTest + " stock low: " + isLowStock);
         if (isLowStock) {
-            receivedNotification = "Low Stock Alert: Tomatoes stock is below 5 kg\nConsider reordering to prevent shortages.";
+            receivedNotification = "Low Stock Alert: Tomatoes stock is below 5 kg.\nConsider reordering to prevent shortages.";
 
         } else {
             receivedNotification = "";
@@ -179,7 +179,8 @@ public class LowStockNotificationTest {
             receivedNotification = "URGENT: " + ingredient.getName() +
                     " is still low on stock( " + ingredient.getStock() +
                     " " + ingredient.getUnit() +
-                    " remaining) No action has been taken in the last 24 hours.";
+                    " remaining) " +
+                    "No action has been taken in the last 24 hours.";
         } else {
             receivedNotification = "";
         }
@@ -193,6 +194,7 @@ public class LowStockNotificationTest {
     }
 
 
+  
 
 
 
