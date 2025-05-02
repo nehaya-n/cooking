@@ -18,6 +18,7 @@ Feature: Suggest Ingredient Substitutions Based on Dietary Restrictions
       """
 
 
+
   # Scenario 2: System suggests a dietary-friendly alternative
   Scenario: Customer selects an ingredient that conflicts with their dietary restrictions
     Given a customer has the following dietary restriction:"Lactose-Free"

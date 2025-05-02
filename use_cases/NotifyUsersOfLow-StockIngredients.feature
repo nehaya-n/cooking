@@ -14,7 +14,6 @@ Feature: Notify Users of Low-Stock Ingredients
       Consider reordering to prevent shortages.
       """
 
-
   # Scenario 2: Kitchen manager receives a critical alert for an out-of-stock ingredient
   Scenario: Notify kitchen manager when an ingredient is out of stock
     Given the stock level for "Olive Oil" reaches 0 liters

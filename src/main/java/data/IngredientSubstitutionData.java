@@ -26,6 +26,7 @@ public class IngredientSubstitutionData {
             ingredient.setStock(stock);
         }
     }
+    
 
     public static String checkIngredientSubstitution(String ingredient, String substitute) {
         Ingredient ing = IngredientSubstitutionData.getIngredientByName(ingredient);

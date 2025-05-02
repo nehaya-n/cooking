@@ -108,6 +108,7 @@ public class IngredientSubstitutionTest {
     }
     
     
+    
     //Scenario 3: Chef receives an alert for ingredient substitution
     @Given("a customer has replaced {string} with {string} in their order")
     public void aCustomerHasReplacedWithInTheirOrder(String originalIngredient, String substitutedIngredient) {

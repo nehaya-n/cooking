@@ -15,6 +15,7 @@ import data.IngredientData;
 import static org.junit.Assert.*;
 
 public class LowStockNotificationTest {
+	
 
     private static final Logger logger = Logger.getLogger(LowStockNotificationTest.class.getName());
     private String ingredientUnderTest;
