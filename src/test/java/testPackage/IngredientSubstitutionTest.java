@@ -2,11 +2,15 @@ package testPackage;
 
 import cook.entities.Ingredient;
 import data.IngredientSubstitutionData;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import cook.entities.CustomMeal;
+
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import static org.junit.Assert.*;
@@ -29,11 +33,8 @@ public class IngredientSubstitutionTest {
         logger.info("Customer is creating a custom meal: " + customMeal);
     }
 
-    @And("the following ingredient is out of stock:")
-    public void theFollowingIngredientIsOutOfStock() {
 
-        IngredientSubstitutionData.updateStock("Avocado", 0);
-    }
+
 
     @When("the customer selects {string}")
     public void theCustomerSelects(String ingredient) {
@@ -87,13 +88,16 @@ public class IngredientSubstitutionTest {
     }
 
     @Then("the chef should receive an alert:")
-    public void theChefShouldReceiveAnAlert() {
+    public void theChefShouldReceiveAnAlert(String expectedAlert) {
         String originalIngredient = "Cheese";
         String substitutedIngredient = "Vegan Cheese";
         String notification = IngredientSubstitutionData.generateChefNotification(originalIngredient, substitutedIngredient);
 
-        assertNotNull("Chef should receive an alert for substitution", notification);
+
+        assertEquals("The chef should receive the correct alert message", expectedAlert, notification);
     }
+
+
     @And("the chef can approve or modify the final recipe")
     public void theChefCanApproveOrModifyTheFinalRecipe() {
         boolean chefApproved = true;
@@ -166,5 +170,13 @@ public class IngredientSubstitutionTest {
     }
 
 
+    @And("the following ingredient is out of stock:")
+    public void theFollowingIngredientIsOutOfStock(io.cucumber.datatable.DataTable dataTable) {
+            Map<String, String> data = dataTable.asMap(String.class, String.class);
+            IngredientSubstitutionData.updateStock("Avocado", Integer.parseInt(data.get("Avocado")));
+            IngredientSubstitutionData.updateStock("Tomato", Integer.parseInt(data.get("Tomato")));
+            IngredientSubstitutionData.updateStock("Onion", Integer.parseInt(data.get("Onion")));
 
+
+    }
 }

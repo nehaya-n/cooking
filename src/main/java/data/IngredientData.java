@@ -17,6 +17,7 @@ public class IngredientData {
         ingredients.add(new Ingredient("Onions", 15, 5));
         ingredients.add(new Ingredient("Olive Oil", 5, 3));
         ingredients.add(new Ingredient("Milk", 8, 2));
+        ingredients.add(new Ingredient("Avocado", 4, 3));
     }
 
     public static List<Ingredient> getIngredients() {

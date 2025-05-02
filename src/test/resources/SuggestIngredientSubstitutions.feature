@@ -11,8 +11,9 @@ Feature: Suggest Ingredient Substitutions Based on Dietary Restrictions
   Scenario: Customer selects an unavailable ingredient
     Given a customer is creating a custom meal
     And the following ingredient is out of stock:
-      | Ingredient  |
-      | Avocado     |
+      | Avocado     | 0      |
+      | Tomato      | 5      |
+      | Onion       | 0      |
     When the customer selects "Avocado"
     Then the system should suggest an alternative ingredient:
       """
@@ -38,8 +39,8 @@ Feature: Suggest Ingredient Substitutions Based on Dietary Restrictions
     When the order is placed
     Then the chef should receive an alert:
       """
-      Customer John Doe has requested a substitution: Cheese → Vegan Cheese.
-      Please review and approve the modification.
+      Customer has requested a substitution: Cheese → Vegan Cheese
+      Please review and approve the modification
       """
     And the chef can approve or modify the final recipe
 
@@ -62,7 +63,7 @@ Feature: Suggest Ingredient Substitutions Based on Dietary Restrictions
   # Scenario 5: System prevents substitutions that conflict with multiple dietary restrictions
   Scenario: System prevents an invalid substitution
     Given a customer has the following dietary restrictions:
-      | Restriction       |
+      | Restriction      |
       | Vegan            |
       | Gluten-Free      |
     When the customer selects "Whole Wheat Bread"

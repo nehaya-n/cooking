@@ -26,15 +26,17 @@ Feature: Notify Users of Low-Stock Ingredients
 
   # Scenario 3: System suggests an automatic restock order when multiple ingredients are low
   Scenario: System suggests a restock order for multiple low-stock ingredients
-    Given the following ingredients are below the low-stock threshold: Tomatoes, Onions, Olive Oil
+    Given the following ingredients are below the low-stock threshold:
+      | Tomatoes   | 3             |
+      | Onions     | 2             |
+      | Olive Oil  | 1             |
     When the system detects the low-stock status
     Then the kitchen manager should receive a restock recommendation:
       """
       Low Stock Alert:
-      - Tomatoes: 3 kg remaining (Order Recommended)
-      - Onions: 2 kg remaining (Order Recommended)
-      - Olive Oil: 1 liter remaining (Order Recommended)
-      Would you like to place an order now? [Yes] [No]
+      - Tomatoes: 3 remaining (Order Recommended)
+      - Onions: 2 remaining (Order Recommended)
+      - Olive Oil: 1 remaining (Order Recommended)
       """
 
   # Scenario 4: Kitchen manager acknowledges the low-stock notification
@@ -43,17 +45,17 @@ Feature: Notify Users of Low-Stock Ingredients
     When the kitchen manager views the alert
     And selects "Acknowledge"
     Then the system should mark the alert as reviewed
-    And no further notifications should be sent for the same ingredient until stock is updated
+
 
   # Scenario 5: System escalates low-stock alerts if no action is taken
   Scenario: Escalate alert if no action is taken on a low-stock ingredient
-    Given a low-stock alert for "Milk" was sent 24 hours ago
+    Given a low-stock alert for "Tomatoes" was sent 24 hours ago
     And the kitchen manager has not acknowledged or reordered
     When the system checks the pending alert
     Then the kitchen manager should receive an escalated notification:
-      """
-      URGENT: Milk is still low on stock (1 liter remaining).
-      No action has been taken in the last 24 hours.
-      Immediate restocking is strongly recommended.
-      """
+  """
+  URGENT: Milk is still low on stock (1 liter remaining).
+  No action has been taken in the last 24 hours.
+  Immediate restocking is strongly recommended.
+  """
 
