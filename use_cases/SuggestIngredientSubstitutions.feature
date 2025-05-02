@@ -67,4 +67,3 @@ Feature: Suggest Ingredient Substitutions Based on Dietary Restrictions
       Regular Bread is not suitable for a gluten-free diet. Please choose a different option.
       """
     And the customer should be prompted to select an alternative
-
