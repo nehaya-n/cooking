@@ -38,7 +38,7 @@ public class IngredientSubstitutionTest {
     }
     @And("the following ingredient is out of stock: {string}")
     public void theFollowingIngredientIsOutOfStock(String ingredientName) {
-        // تسجيل العنصر كمكوّن غير متوفر
+
         Ingredient ingredient = new Ingredient(ingredientName, 0, 5); // stock = 0
         IngredientSubstitutionData.ingredients.put(ingredientName, ingredient);
     }
@@ -89,7 +89,7 @@ public class IngredientSubstitutionTest {
 
     @When("the customer selects {string} for their meal")
     public void theCustomerSelectsForTheirMeal(String ingredient) {
-        // 🟢 تأكد من تسجيل المكوّن أولًا
+
         if (!IngredientSubstitutionData.ingredients.containsKey(ingredient)) {
             Ingredient newIngredient = new Ingredient(ingredient, 5, 2);
             IngredientSubstitutionData.ingredients.put(ingredient, newIngredient);
@@ -216,7 +216,7 @@ public class IngredientSubstitutionTest {
     }
     @When("the customer selects the {string}")
     public void theCustomerSelectsThe(String ingredient) {
-        // 🟢 تأكد من تسجيل المكوّن أولًا
+
         if (!IngredientSubstitutionData.ingredients.containsKey(ingredient)) {
             Ingredient newIngredient = new Ingredient(ingredient, 5, 3);
             IngredientSubstitutionData.ingredients.put(ingredient, newIngredient);
