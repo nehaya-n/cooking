@@ -19,6 +19,10 @@ public class IngredientData {
         ingredients.add(new Ingredient("Milk", 8, 2));
         ingredients.add(new Ingredient("Avocado", 4, 3));
         ingredients.add(new Ingredient("Cheese", 4, 3));
+        ingredients.add(new Ingredient("Chicken",20, 10));
+        ingredients.add(new Ingredient("Pasta",10, 7));
+         
+                
     }
 
     public static List<Ingredient> getIngredients() {
@@ -55,3 +59,4 @@ public class IngredientData {
     }
 
 }
+

@@ -43,7 +43,9 @@ public class RestockTrackingTest {
     public void setRestockThreshold(String ingredient, int threshold) {
         Ingredient ing = IngredientData.getIngredientByName(ingredient);
         assertNotNull(ing);
-        IngredientData.updateStock(ingredient, threshold);
+        ing.setLowStockThreshold(threshold);  
+
+       
         logger.info("Restocking threshold for " + ingredient + ": " + threshold + "kg.");
     }
 
@@ -122,25 +124,22 @@ public class RestockTrackingTest {
     }
     @And("the supplier has delivered the requested stock")
     public void theSupplierHasDeliveredTheRequestedStock() {
-
         Ingredient ingredient = IngredientData.getIngredientByName("Tomatoes");
         assertNotNull(ingredient);
-        int requestedStock = 10;
-        int newStockLevel = ingredient.getStock() + requestedStock;
-        IngredientData.updateStock("Tomatoes", newStockLevel);
-
-        logger.info("Supplier has delivered the requested stock. New stock for Tomatoes: " + newStockLevel + " kg.");
+        logger.info("Supplier has delivered the requested stock.");
     }
+
     @When("the kitchen manager updates the inventory with the new stock amount")
     public void updateStockAfterDelivery() {
-        RestockData.markAsDelivered("Tomatoes", 10);
+        RestockData.markAsDelivered("Tomatoes", 10); 
         logger.info("Stock updated after delivery.");
     }
+
 
     @Then("the stock level for {string} should be updated to reflect the new total")
     public void verifyStockLevel(String ingredient) {
         Ingredient ing = IngredientData.getIngredientByName(ingredient);
-        assert ing != null;
+        assertNotNull(ing);
         assertEquals(15, ing.getStock());
         logger.info("Stock level for " + ingredient + " is now " + ing.getStock());
     }
@@ -150,6 +149,7 @@ public class RestockTrackingTest {
         lastNotification = "Stock updated: Tomatoes now at 15 kg.";
         assertEquals(expected.trim(), lastNotification.trim());
     }
+
 
     // Scenario 5
     @Given("the kitchen manager has placed a restocking order for {string} \\({int} kg)")

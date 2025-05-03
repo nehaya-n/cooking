@@ -20,6 +20,7 @@ public class RestockData {
         return restockRequests.stream()
                 .anyMatch(req -> req.getIngredientName().equalsIgnoreCase(name) && !req.isDelivered());
     }
+    
 
     public static RestockRequest getPendingRequest(String name) {
         return restockRequests.stream()

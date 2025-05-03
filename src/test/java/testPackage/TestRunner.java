@@ -10,7 +10,8 @@ import io.cucumber.junit.CucumberOptions;
     glue = "testPackage",                      
     plugin = {"html:target/cucumber/wikipedia.html"},
     monochrome = true,
-    snippets = CucumberOptions.SnippetType.CAMELCASE
+    snippets = CucumberOptions.SnippetType.CAMELCASE,
+    publish = true 
 )
 public class TestRunner {
 }
