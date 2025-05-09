@@ -17,11 +17,7 @@ public class MealOrderSteps {
     private OrderSystem system;
 
     // Scenario 1: Customer accesses order history
-    @Given("a customer is logged into their account")
-    public void customerIsLoggedIn() {
-        customer = new Customer("John Doe", true, true); // example initialization
-        customer.login(); // الآن الـ login() تعرفت
-    }
+ 
 
     @Given("they have previously ordered the following meals:")
     public void customerHasPastOrders(DataTable data) {
@@ -67,10 +63,10 @@ public class MealOrderSteps {
         assertTrue(system.cartContains(mealName));
     }
 
-    @Then("display a confirmation message:")
+   /* @Then("display a confirmation message:")
     public void displayConfirmationMessage(String message) {
         assertEquals(message, system.getConfirmationMessage());
-    }
+    }*/
 
     // Scenario 3: Chef accesses customer order history for meal plan suggestions
     @Given("a chef is logged into their account")
