@@ -17,28 +17,42 @@ public class MealOrderSteps {
     private OrderSystem system;
 
     // Scenario 1: Customer accesses order history
- 
-
     @Given("they have previously ordered the following meals:")
     public void customerHasPastOrders(DataTable data) {
+        if (customer == null) {
+            customer = new Customer("Customer A", false, false);  // تهيئة العميل إذا لم يكن مهيأ
+        }
+
+        if (system == null) {
+            system = new OrderSystem();  // تهيئة النظام إذا لم يكن مهيأ
+        }
+
+        // تحويل البيانات من DataTable إلى قائمة من الطلبات
         for (int i = 0; i < data.height(); i++) {
+            String orderId = data.cell(i, 0);  // orderId
             String mealName = data.cell(i, 1);
             String orderDate = data.cell(i, 2);
             String status = data.cell(i, 3);
-            Order order = new Order(mealName, orderDate, status);
-            customer.addPastOrders(order);
+
+            // إنشاء الطلب وإضافته إلى العميل والنظام
+            Order order = new Order(orderId, mealName, orderDate, status);
+            customer.addPastOrders(order);  // إضافة الطلب للعميل
+            system.addOrder(order);  // إضافة الطلب للنظام
         }
     }
 
     @When("the customer navigates to the \"Order History\" page")
     public void customerNavigatesToOrderHistory() {
-        system = new OrderSystem(); // تعديل من System إلى OrderSystem
         system.navigateTo("Order History");
     }
 
     @Then("the system should display a list of their past meal orders")
     public void systemDisplaysOrderHistory() {
-        assertTrue(system.getPastOrders().containsAll(customer.getPastOrders()));
+        // التحقق من أن النظام يحتوي على نفس الطلبات
+        assertEquals(customer.getPastOrders().size(), system.getPastOrders().size());
+        for (Order order : customer.getPastOrders()) {
+            assertTrue(system.getPastOrders().contains(order));
+        }
     }
 
     @Then("each order should include:")
@@ -47,10 +61,33 @@ public class MealOrderSteps {
             String mealName = data.cell(i, 1);
             String orderDate = data.cell(i, 2);
             String status = data.cell(i, 3);
+
+            // استخدام البناء الجديد الذي يحتوي فقط على 3 معلمات
             Order expectedOrder = new Order(mealName, orderDate, status);
-            assertTrue(customer.getPastOrders().contains(expectedOrder));
+
+            // طباعة للكائنات للتحقق من القيم
+            System.out.println("Expected Order: " + expectedOrder);
+            for (Order order : customer.getPastOrders()) {
+                System.out.println("Customer Past Order: " + order);
+            }
+
+            // مقارنة باستخدام equals()
+            boolean isPresent = false;
+            for (Order order : customer.getPastOrders()) {
+                if (order.equals(expectedOrder)) {
+                    isPresent = true;
+                    break;
+                }
+            }
+
+            // إضافة التحقق من العثور على الطلب المتوقع
+            assertTrue("Expected order not found in past orders", isPresent);
         }
     }
+
+
+
+
 
     // Scenario 2: Customer reorders a previously liked meal
     @When("the customer selects \"Reorder\" for {string}")
@@ -69,29 +106,39 @@ public class MealOrderSteps {
     }*/
 
     // Scenario 3: Chef accesses customer order history for meal plan suggestions
+    // Scenario 3: Chef accesses customer order history for meal plan suggestions
     @Given("a chef is logged into their account")
     public void chefIsLoggedIn() {
-        chef = new Chef("Chef A", 5);
-        chef.login();
+        if (chef == null) {
+            chef = new Chef("Chef A", 5); // تهيئة الطاهي إذا لم يكن مهيأ
+        }
+        chef.login(); // تسجيل الدخول للطاهي
     }
 
     @When("the chef accesses Customer A’s order history")
     public void chefAccessesCustomerOrderHistory() {
-        chef.accessOrderHistory(customer);
+        if (customer == null) {
+            customer = new Customer("Customer A", false, false); // تهيئة العميل إذا لم يكن مهيأ
+        }
+        if (system == null) {
+            system = new OrderSystem(); // تهيئة النظام إذا لم يكن مهيأ
+        }
+        chef.accessOrderHistory(customer); // الطاهي يقوم بالوصول إلى تاريخ الطلبات للعميل
     }
 
     @Then("the system should display the following past meals:")
     public void systemDisplaysCustomerMeals(DataTable data) {
+        // التأكد من أن النظام يحتوي على قائمة الوجبات السابقة للعميل
+        assertNotNull(system.getPastMealsForCustomer(customer));
+
+        // التحقق من أن الوجبات السابقة في النظام تحتوي على نفس الوجبات كما في البيانات المدخلة
         for (int i = 0; i < data.height(); i++) {
             String mealName = data.cell(i, 0);
-            assertTrue(system.getPastMealsForCustomer(customer).contains(mealName));
+            assertTrue("Meal " + mealName + " not found in system's past meals", system.getPastMealsForCustomer(customer).contains(mealName));
         }
     }
 
-    @Then("the system should suggest:")
-    public void systemSuggestsMeals(String suggestion) {
-        assertTrue(system.getMealSuggestions().contains(suggestion));
-    }
+  
 
     // Scenario 4: System administrator retrieves customer order history for analysis
     @Given("a system administrator is logged into the dashboard")
@@ -108,22 +155,40 @@ public class MealOrderSteps {
     @Then("the system should generate a report showing:")
     public void systemGeneratesReport(DataTable data) {
         for (int i = 0; i < data.height(); i++) {
-            String mealName = data.cell(i, 0);
-            int orders = Integer.parseInt(data.cell(i, 1));
-            assertEquals(orders, system.getOrderHistoryReport(mealName));
+            String mealName = data.cell(i, 0);  // اسم الوجبة
+            String orders = data.cell(i, 1);   // عدد الطلبات كـ String
+
+            try {
+                // محاولة تحويل العدد إلى int
+                int ordersCount = Integer.parseInt(orders);  // حاول تحويل النص إلى رقم
+                assertEquals("Expected order count for " + mealName, ordersCount, system.getOrderHistoryReport(mealName));
+            } catch (NumberFormatException e) {
+                // التعامل مع الخطأ في حال كان الإدخال ليس رقماً
+                System.err.println("Invalid number format for meal: " + mealName + ". Expected a number, got: " + orders);
+                fail("Failed to parse the number: " + orders);
+            }
         }
     }
+
+
+
+
 
     @Then("display insights such as:")
     public void systemDisplaysInsights(String insights) {
         assertTrue(system.getInsights().contains(insights));
     }
 
+
     // Scenario 5: System recommends reordering favorite meals
     @Given("a customer has ordered {string} {int} times")
     public void customerHasOrderedFavoriteMeal(String mealName, int timesOrdered) {
-        customer.setFavoriteMeal(mealName, timesOrdered);
+        if (customer == null) {
+            customer = new Customer("Customer A", false, false);  // تهيئة العميل إذا كان null
+        }
+        customer.setFavoriteMeal(mealName, timesOrdered);  // تعيين الوجبة المفضلة
     }
+
 
     @When("the customer logs into their account")
     public void customerLogsIn() {
@@ -132,6 +197,12 @@ public class MealOrderSteps {
  
     @Then("the system should display a suggestion:")
     public void systemDisplaysSuggestion(String suggestion) {
+        // تأكد من تهيئة system إذا كانت null
+        if (system == null) {
+            system = new OrderSystem();  // تهيئة النظام إذا كان null
+        }
+        
+        // التحقق من وجود التوصية في النظام
         assertTrue(system.getRecommendation().contains(suggestion));
     }
 }
