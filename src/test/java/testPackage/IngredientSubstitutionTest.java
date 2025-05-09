@@ -227,11 +227,12 @@ public class IngredientSubstitutionTest {
         Ingredient ingredientSelected = IngredientSubstitutionData.getIngredientByName(ingredient);
         assertNotNull("Ingredient should be available", ingredientSelected);
     }
-
-    @Then("the system should display an error message:")
-    public void theSystemShouldDisplayAnErrorMessage(String expectedMessage) {
-        assertEquals(expectedMessage.trim(), actualErrorMessage.trim());
+    @Then("the system should display a substitution error message:")
+    public void showSubstitutionError(String expected) {
+        assertNotNull("actualErrorMessage is null", actualErrorMessage);
+        assertEquals(expected.trim(), actualErrorMessage.trim());
     }
+   
 
     @And("the customer should be prompted to select an alternative")
     public void theCustomerShouldBePromptedToSelectAnAlternative() {

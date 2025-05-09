@@ -63,7 +63,7 @@ Feature: Suggest Ingredient Substitutions Based on Dietary Restrictions
       | Gluten-Free      |
     When the customer selects the "Whole Wheat Bread"
     And the system suggests "Regular Bread" as a substitution
-    Then the system should display an error message:
+    Then the system should display a substitution error message:
       """
       Regular Bread is not suitable for a gluten-free diet. Please choose a different option.
       """
