@@ -1,34 +1,19 @@
 package org.example;
-import cook.entities.Ingredient;
-import data.IngredientData;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        IngredientData.initializeIngredients();
+        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
+        // to see how IntelliJ IDEA suggests fixing it.
+        System.out.printf("Hello and welcome!");
 
-        // Get a specific ingredient (for example: Tomatoes)
-        Ingredient tomato = IngredientData.getIngredientByName("Tomatoes");
-        System.out.println("Ingredient: " + tomato.getName());
-        System.out.println("Current Stock: " + tomato.getStock() + " kg");
-        System.out.println("Low Stock Threshold: " + tomato.getLowStockThreshold() + " kg");
 
-        // Check if the ingredient is below the low-stock threshold
-        if (tomato.getStock() < tomato.getLowStockThreshold()) {
-            System.out.println("Low Stock Alert: " + tomato.getName() + " stock is below threshold!");
+        for (int i = 1; i <= 5; i++) {
+            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
+            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
+            System.out.println("i = " + i);
         }
-
-        // Update the stock of an ingredient (for example: Tomatoes)
-        tomato.setStock(2);  // Set stock to 2 kg for testing low-stock alert
-        System.out.println("Updated Stock: " + tomato.getStock() + " kg");
-
-        // After updating, check if the ingredient is now below the threshold
-        if (tomato.getStock() < tomato.getLowStockThreshold()) {
-            System.out.println("Low Stock Alert: " + tomato.getName() + " stock is now below threshold!");
-        }
-
-        // You can similarly work with other ingredients and trigger alerts
     }
 }
 
