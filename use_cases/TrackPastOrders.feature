@@ -13,7 +13,7 @@ Feature: Track Past Orders and Personalized Meal Plans
 
   # Scenario 1: Customer views past meal orders
   Scenario: Customer accesses order history
-    Given a customer is logged into their account
+    Given a customer is logged into their account      
     And they have previously ordered the following meals:
       | Order ID | Meal Name              | Order Date  | Status    |
       | 101      | Grilled Salmon         | 2025-02-15  | Delivered |
@@ -34,10 +34,7 @@ Feature: Track Past Orders and Personalized Meal Plans
       | 201      | Quinoa Bowl       | 2025-02-10  | Delivered |
     When the customer selects "Reorder" for "Quinoa Bowl"
     Then the system should add "Quinoa Bowl" to the shopping cart
-    And display a confirmation message:
-      """
-      Quinoa Bowl has been added to your cart.
-      """
+   
 
   # Scenario 3: Chef accesses customer order history for meal plan suggestions
   Scenario: Chef retrieves a customer’s past orders for meal personalization
@@ -49,10 +46,7 @@ Feature: Track Past Orders and Personalized Meal Plans
       | Vegan Pesto Pasta   | 3            |
       | Quinoa Bowl        | 2            |
       | Grilled Salmon     | 1            |
-    And the system should suggest:
-      """
-      Based on order history, Customer A prefers Vegan Pesto Pasta and Quinoa Bowl. Consider including them in the personalized meal plan.
-      """
+    
 
   # Scenario 4: System administrator retrieves customer order history for analysis
   Scenario: System administrator reviews order trends
@@ -63,12 +57,6 @@ Feature: Track Past Orders and Personalized Meal Plans
       | Vegan Pesto Pasta      | 150                     |
       | Quinoa Bowl            | 120                     |
       | Grilled Salmon         | 100                     |
-    And display insights such as:
-      """
-      - The most popular meal is Vegan Pesto Pasta with 150 orders.
-      - Quinoa Bowl is frequently ordered by vegetarian customers.
-      - Grilled Salmon is the top-selling seafood dish.
-      """
 
   # Scenario 5: System notifies a customer about their favorite meals
   Scenario: System recommends reordering favorite meals

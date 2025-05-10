@@ -8,14 +8,14 @@ public class Order {
     private String orderDate;
     private String status;
 
-    // البناء الذي يستقبل 4 معلمات
+   
     public Order(String orderId, String mealName, String orderDate, String status) {
         this.orderId = orderId;
         this.mealName = mealName;
         this.orderDate = orderDate;
         this.status = status;
     }
- // بناء جديد يستقبل 3 معلمات
+ 
     public Order(String mealName, String orderDate, String status) {
         this.mealName = mealName;
         this.orderDate = orderDate;
