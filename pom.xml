@@ -79,6 +79,11 @@
                     <failIfNoTests>false</failIfNoTests>
                 </configuration>
             </plugin>
+                  <plugin>
+            <groupId>org.sonarsource.scanner.maven</groupId>
+            <artifactId>sonar-maven-plugin</artifactId>
+            <version>5.1.0.4751</version> <!-- Specify the version explicitly -->
+        </plugin>
         </plugins>
     </build>
 </project>
