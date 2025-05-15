@@ -11,10 +11,10 @@ import static org.junit.Assert.*;
 public class BillingSteps {
 
     private Invoice invoice;
-    private MealOrder order;
-    private MealOrder order1;
-    private MealOrder order2; // Added the second order
-    private MealOrder order3; // Added the third order
+    private FoodOrder order;
+    private FoodOrder order1;
+    private FoodOrder order2; // Added the second order
+    private FoodOrder order3; // Added the third order
     private FinancialReport dailyReport;
     private FinancialReport monthlyReport;
 
@@ -24,7 +24,7 @@ public class BillingSteps {
         String orderId = dataTable.cell(1, 0);
         String items = dataTable.cell(1, 1);
         double totalAmount = Double.parseDouble(dataTable.cell(1, 2).replace("$", ""));
-        order = new MealOrder(orderId, "John Doe", "2025-03-03 12:00 PM");
+        order = new FoodOrder(orderId, "John Doe", "2025-03-03 12:00 PM");
         order.setStatus("Completed"); // Make sure to mark it completed
     }
 
@@ -70,15 +70,15 @@ public class BillingSteps {
     @Given("there are completed orders for the day:")
     public void givenThereAreCompletedOrdersForTheDay(io.cucumber.datatable.DataTable dataTable) {
         // Create orders from the provided data
-        order = new MealOrder("#12340", "Alice", "2025-03-03 10:00 AM");
+        order = new FoodOrder("#12340", "Alice", "2025-03-03 10:00 AM");
         order.setStatus("Completed");
         order.setTotalAmount(50.00);
 
-        order2 = new MealOrder("#12341", "Bob", "2025-03-03 11:00 AM");
+        order2 = new FoodOrder("#12341", "Bob", "2025-03-03 11:00 AM");
         order2.setStatus("Completed");
         order2.setTotalAmount(30.00);
 
-        order3 = new MealOrder("#12342", "Charlie", "2025-03-03 12:00 PM");
+        order3 = new FoodOrder("#12342", "Charlie", "2025-03-03 12:00 PM");
         order3.setStatus("Completed");
         order3.setTotalAmount(25.00);
     }
@@ -104,15 +104,15 @@ public class BillingSteps {
     @Given("the system has recorded transactions for the month of {string}")
     public void givenTheSystemHasRecordedTransactionsForTheMonth(String month) {
         // Create orders from the provided data for the given month
-        order1 = new MealOrder("#12340", "Alice", "2025-02-01 10:00 AM");
+        order1 = new FoodOrder("#12340", "Alice", "2025-02-01 10:00 AM");
         order1.setStatus("Completed");
         order1.setTotalAmount(50.00);
 
-        order2 = new MealOrder("#12341", "Bob", "2025-02-01 11:00 AM");
+        order2 = new FoodOrder("#12341", "Bob", "2025-02-01 11:00 AM");
         order2.setStatus("Completed");
         order2.setTotalAmount(30.00);
 
-        order3 = new MealOrder("#12342", "Charlie", "2025-02-01 12:00 PM");
+        order3 = new FoodOrder("#12342", "Charlie", "2025-02-01 12:00 PM");
         order3.setStatus("Completed");
         order3.setTotalAmount(25.00);
 

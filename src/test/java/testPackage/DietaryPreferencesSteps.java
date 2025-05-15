@@ -129,7 +129,6 @@ public class DietaryPreferencesSteps {
     public void updateProfile() {
         System.out.println("Profile updated");
     }
-
     @Given("the kitchen manager is logged into the inventory system")
     public void theKitchenManagerIsLoggedIntoTheInventorySystem() {
         System.out.println("Kitchen manager logged into inventory system");
@@ -145,3 +144,5 @@ public class DietaryPreferencesSteps {
         System.out.println("Prices from suppliers: " + supplierPrices);
     }
 }
+   
+

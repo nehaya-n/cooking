@@ -2,7 +2,7 @@ package testPackage;
 
 import cook.entities.Customer;
 
-import cook.entities.Chef;
+import cook.entities.MealPlanner;
 import cook.entities.Admin;
 import cook.entities.OrderSystem; 
 import cook.entities.Order;
@@ -17,7 +17,7 @@ import java.util.List;
 public class MealOrderSteps {
 
     private Customer customer;
-    private Chef chef;
+    private MealPlanner chef;
     private Admin admin; 
     private OrderSystem system;
 
@@ -127,7 +127,7 @@ public class MealOrderSteps {
     @Given("a chef is logged into their account")
     public void chefIsLoggedIn() {
         if (chef == null) {
-            chef = new Chef("Chef A", 5); // تهيئة الطاهي إذا لم يكن مهيأ
+            chef = new MealPlanner("Chef A", 5); // تهيئة الطاهي إذا لم يكن مهيأ
         }
         chef.login(); // تسجيل الدخول للطاهي
     }
@@ -135,7 +135,7 @@ public class MealOrderSteps {
     @Given("they are preparing a meal plan for Customer A")
     public void theyArePreparingAMealPlanForCustomerA() {
         if (chef == null) {
-            chef = new Chef("Chef A", 5);
+            chef = new MealPlanner("Chef A", 5);
             chef.login();
         }
         if (customer == null) {

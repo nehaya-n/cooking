@@ -1,7 +1,7 @@
 package cook.entities;
 import java.util.Locale;
 
-public class MealOrder {
+public class FoodOrder {
     private String orderId;
     private String customerName;
     private String deliveryTime;
@@ -10,7 +10,7 @@ public class MealOrder {
     private int etaMinutes;
     private double totalAmount; // Added field for totalAmount
 
-    public MealOrder(String orderId, String customerName, String deliveryTime) {
+    public FoodOrder(String orderId, String customerName, String deliveryTime) {
         this.orderId = orderId;
         this.customerName = customerName;
         this.deliveryTime = deliveryTime;
@@ -26,21 +26,21 @@ public class MealOrder {
         return orderId;
     }
 
-    public void setDeliveryETA(int minutes) {
+   /* public void setDeliveryETA(int minutes) {
         this.etaMinutes = minutes;
-    }
+    }*/
 
-    public void setSubscription(boolean isSubscription) {
+  /*  public void setSubscription(boolean isSubscription) {
         this.isSubscription = isSubscription;
         this.totalAmount = calculateTotalAmount(); // Recalculate total amount when subscription changes
-    }
+    }*/
 
     public void setDeliveryTime(String deliveryTime) {
         this.deliveryTime = deliveryTime;
     }
 
     // Function to generate invoice
-    public String generateInvoice() {
+   /* public String generateInvoice() {
         String invoiceNumber = "INV-" + orderId.substring(1); // Create invoice number based on order ID
         String paymentStatus = "Pending"; // Default payment status
         return String.format("""
@@ -50,7 +50,7 @@ public class MealOrder {
                 Total Amount: $%.2f
                 Payment Status: %s
                 """, invoiceNumber, orderId, totalAmount, paymentStatus);
-    }
+    }*/
 
     // Function to calculate the total amount (example logic)
     private double calculateTotalAmount() {
@@ -62,15 +62,15 @@ public class MealOrder {
     }
 
     // Function to update delivery time with additional verification
-    public void updateDeliveryTime(String newDeliveryTime) {
+  /*  public void updateDeliveryTime(String newDeliveryTime) {
         if (status.equals("Scheduled")) {
             this.deliveryTime = newDeliveryTime;
         } else {
             System.out.println("Cannot update delivery time, order is already " + status);
         }
-    }
+    }*/
 
-    public String generateReminderNotification() {
+ /*   public String generateReminderNotification() {
         return String.format("""
             Reminder: Your meal delivery is scheduled to arrive at %s.
             Please be ready to receive your order. Track your delivery here: [Tracking Link]
@@ -89,7 +89,7 @@ public class MealOrder {
             Your order is arriving soon! The delivery is %d minutes away.
             Please be ready to receive your meal.
             """, etaMinutes);
-    }
+    }*/
 
     // Getter for totalAmount
     public double getTotalAmount() {

@@ -25,19 +25,19 @@ public class FinancialReport {
         return numberOfOrders;
     }
 
-    public static FinancialReport generateDailyReport(List<MealOrder> orders) {
+    public static FinancialReport generateDailyReport(List<FoodOrder> orders) {
         double totalRevenue = 0;
         int orderCount = orders.size();
-        for (MealOrder order : orders) {
+        for (FoodOrder order : orders) {
             totalRevenue += order.getTotalAmount(); // Assume MealOrder has a method getTotalAmount
         }
         return new FinancialReport("2025-03-03", totalRevenue, orderCount);
     }
 
-    public static FinancialReport generateMonthlyReport(List<MealOrder> orders) {
+    public static FinancialReport generateMonthlyReport(List<FoodOrder> orders) {
     	 double totalRevenue = 0;
     	    int orderCount = orders.size();
-    	    for (MealOrder order : orders) {
+    	    for (FoodOrder order : orders) {
     	        totalRevenue += order.getTotalAmount(); // Assume MealOrder has a method getTotalAmount
     	    }
     	    double averageOrderValue = totalRevenue / orderCount;

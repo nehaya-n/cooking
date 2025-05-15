@@ -2,16 +2,16 @@ package cook.entities;
 
 import java.util.List;
 
-public class Chef {
+public class MealPlanner {
     private String name;
     private int workload;
 
-    public Chef(String name, int workload) {
+    public MealPlanner(String name, int workload) {
         this.name = name;
         this.workload = workload;
     }
 
-    public String getName() {
+    /*public String getName() {
         return name;
     }
 
@@ -25,7 +25,7 @@ public class Chef {
 
     public void setWorkload(int workload) {
         this.workload = workload;
-    }
+    }*/
 
     // إضافة الطريقة التي تتيح للطاهي الوصول إلى سجل الطلبات الخاصة بالعميل
     public void accessOrderHistory(Customer customer) {
