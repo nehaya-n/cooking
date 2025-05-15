@@ -2,30 +2,28 @@ package cook.entities;
 
 public class Task {
     private String dishName;
-    public String dueTime;
-    private String assignedChef;
+    private String dueTime;
+    private String status; // Example: "Assigned", "Completed"
 
-    public Task(String dishName, String dueTime, String assignedChef) {
+    public Task(String dishName, String dueTime) {
         this.dishName = dishName;
         this.dueTime = dueTime;
-        this.assignedChef = assignedChef;
+        this.status = "Assigned";
     }
-
 
     public String getDishName() {
         return dishName;
     }
 
-    public void setDishName(String dishName) {
-        this.dishName = dishName;
+    public String getDueTime() {
+        return dueTime;
     }
 
-
-    public String getAssignedChef() {
-        return assignedChef;
+    public String getStatus() {
+        return status;
     }
 
-    public void setAssignedChef(String assignedChef) {
-        this.assignedChef = assignedChef;
+    public void markAsCompleted() {
+        this.status = "Completed";
     }
 }

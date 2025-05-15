@@ -20,7 +20,7 @@ Feature: Send Reminders for Upcoming Orders and Deliveries
 
   # Scenario 2: Chef receives a notification for a scheduled cooking task
   Scenario: Notify the chef about an upcoming cooking task
-    Given a chef has a scheduled cooking task for "Grilled Salmon" at 10:00 AM
+    Given a chef has a scheduled cooking task for "Grilled Salmon" at "10:00 AM"
     And the task is due within 30 minutes
     When the system detects the approaching task time
     Then the chef should receive a notification:
@@ -32,7 +32,7 @@ Feature: Send Reminders for Upcoming Orders and Deliveries
   # Scenario 3: Customer receives a reminder for a meal subscription order
   Scenario: Notify customer about an upcoming meal subscription delivery
     Given a customer is subscribed to a weekly meal plan
-    And the next delivery is scheduled for tomorrow at 1:00 PM
+    And the next delivery is scheduled for tomorrow at "1:00 PM"
     When the system detects the upcoming delivery
     Then the customer should receive a reminder 24 hours in advance:
       """
@@ -44,14 +44,14 @@ Feature: Send Reminders for Upcoming Orders and Deliveries
   Scenario: Send chefs a daily task summary
     Given a chef has multiple scheduled cooking tasks for the day
     When the chef logs into the system in the morning
-    Then they should receive a task summary notification:
-      """
-      Today's Cooking Schedule:
-      - 10:00 AM: Grilled Salmon (Order #1234)
-      - 12:30 PM: Vegan Pasta (Order #5678)
-      - 3:00 PM: Chicken Stir-Fry (Order #9101)
-      Please prepare meals on time. Good luck!
-      """
+   Then they should receive a task summary notification:
+  """
+  Today's Cooking Schedule:
+  - 10:00 AM: Grilled Salmon (Order #1001)
+  - 12:30 PM: Vegan Pasta (Order #1002)
+  - 3:00 PM: Chicken Stir-Fry (Order #1003)
+  Please prepare meals on time. Good luck!
+  """
 
   # Scenario 5: Customer receives a final confirmation notification when delivery is near
   Scenario: Notify customer when delivery is 10 minutes away

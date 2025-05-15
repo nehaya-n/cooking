@@ -28,8 +28,8 @@ Feature: Integrate with Suppliers for Real-Time Pricing and Ordering
       | Supplier   | Price per kg |
       | Supplier A | $2.50        |
       | Supplier B | $2.30        |
-    And they choose Supplier B
-    Then the system should prepare a purchase order for "Tomatoes" from Supplier B
+    And they choose "Supplier B"
+    Then the system should prepare a purchase order for "Tomatoes" from "Supplier B"
 
   # Scenario 3: System automatically generates a purchase order for critically low stock
   Scenario: System auto-generates a purchase order for a critically low ingredient
@@ -66,4 +66,3 @@ Feature: Integrate with Suppliers for Real-Time Pricing and Ordering
       A purchase order for Tomatoes is already in progress (10 kg).
       Please wait for the delivery before placing a new order.
       """
-

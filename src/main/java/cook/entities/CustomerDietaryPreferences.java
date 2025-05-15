@@ -1,45 +1,54 @@
 package cook.entities;
 
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 public class CustomerDietaryPreferences {
-    private Map<String, String> preferences; // Dietary preferences (e.g., Vegetarian, Gluten-Free)
-    private Map<String, String> allergies;  // Allergies (e.g., Peanuts, Shellfish)
-    private boolean preferencesSaved;
+
+    private String customerName;
+    private final Set<String> dietaryRestrictions;
 
     // Constructor
-    public CustomerDietaryPreferences(Map<String, String> preferences, Map<String, String> allergies) {
-        this.preferences = preferences;
-        this.allergies = allergies;
-        this.preferencesSaved = false;
+    public CustomerDietaryPreferences(String customerName) {
+        this.customerName = customerName;
+        this.dietaryRestrictions = new HashSet<>();
     }
 
-    // Getters and Setters
-    public Map<String, String> getPreferences() {
-        return preferences;
+    // Add a dietary restriction to the customer
+    public void addDietaryRestriction(String restriction) {
+        dietaryRestrictions.add(restriction);
     }
 
-    public void setPreferences(Map<String, String> preferences) {
-        this.preferences = preferences;
+    // Remove a dietary restriction from the customer
+    public void removeDietaryRestriction(String restriction) {
+        dietaryRestrictions.remove(restriction);
     }
 
-    public Map<String, String> getAllergies() {
-        return allergies;
+    // Get all dietary restrictions for this customer
+    public Set<String> getDietaryRestrictions() {
+        return new HashSet<>(dietaryRestrictions);
     }
 
-    public void setAllergies(Map<String, String> allergies) {
-        this.allergies = allergies;
+    // Check if the customer has a specific dietary restriction
+    public boolean hasDietaryRestriction(String restriction) {
+        return dietaryRestrictions.contains(restriction);
     }
 
-    public boolean isPreferencesSaved() {
-        return preferencesSaved;
+    // Get customer name
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public void setPreferencesSaved(boolean preferencesSaved) {
-        this.preferencesSaved = preferencesSaved;
+    // Set customer name
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
-    public void savePreferences() {
-        this.preferencesSaved = true;
+    @Override
+    public String toString() {
+        return "CustomerDietaryPreferences{" +
+                "customerName='" + customerName + '\'' +
+                ", dietaryRestrictions=" + dietaryRestrictions +
+                '}';
     }
 }

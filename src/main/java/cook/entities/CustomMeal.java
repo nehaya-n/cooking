@@ -3,11 +3,11 @@ package cook.entities;
 import java.util.HashSet;
 import java.util.Set;
 
-
 public class CustomMeal {
 
     public String mealName;
     public Set<String> ingredients;
+    public Set<Ingredient> ingredient1;
     private boolean saved;
 
     public CustomMeal(String mealName) {
@@ -21,9 +21,14 @@ public class CustomMeal {
 
     }
 
-    public void removeIngredient(String ingredient) {
-        ingredients.remove(ingredient);
+    public void replaceIngredient(String original, String substitute) {
 
+        ingredient1.stream()
+                .filter(ingredient -> ingredient.getName().equals(original))
+                .forEach(ingredient -> {
+                    ingredient.setName(substitute);
+
+        });
     }
 
     public boolean containsIngredient(String ingredient) {
@@ -38,15 +43,7 @@ public class CustomMeal {
     public boolean isSaved() {
         return saved;
     }
-/*
-    public String getMealName() {
-        return mealName;
-    }
 
-    public Set<String> getIngredients() {
-        return ingredients;
-    }
-*/
     public String getName() {
         return mealName;
     }

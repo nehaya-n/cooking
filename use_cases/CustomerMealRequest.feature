@@ -31,7 +31,7 @@ Feature: Allow Customers to Create Custom Meal Requests
       | Ingredient  |
       | Avocado     |
     When the customer selects "Avocado" as an ingredient
-    Then the system should display an error message:
+    Then the system should display a custom meal error message:
       """
       Sorry, Avocado is currently unavailable. Please choose a different ingredient.
       """
@@ -43,7 +43,7 @@ Feature: Allow Customers to Create Custom Meal Requests
       | Pineapple      | Soy Sauce     |
       | Milk          | Lemon Juice   |
     When a customer selects "Milk" and "Lemon Juice" together
-    Then the system should display an error message:
+    Then the system should display a custom meal error message:
       """
       The combination of Milk and Lemon Juice is not allowed. Please modify your selection.
       """
