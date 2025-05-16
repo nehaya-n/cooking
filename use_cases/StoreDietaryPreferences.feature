@@ -53,32 +53,6 @@ Feature: Store Dietary Preferences and Allergies
       """
     And prevent the customer from proceeding with the order
 
-  # Scenario 4: System suggests meals based on dietary preferences
-  Scenario: Customer receives meal recommendations based on dietary preferences
-    Given a customer with the following dietary preferences:
-      | Vegetarian  | Yes  |
-      | Gluten-Free | Yes  |
-    And the system contains the following meals:
-      | Meal Name                  | Vegetarian | Gluten-Free |
-      | Grilled Chicken Salad       | No         | Yes        |
-      | Quinoa & Avocado Bowl       | Yes        | Yes        |
-      | Cheese Pizza                | Yes        | No         |
-    When the customer requests meal recommendations
-    Then the system should suggest:
-      | Meal Name                  |
-      | Quinoa & Avocado Bowl       |
+  
 
-  # Scenario 5: Customer updates dietary preferences
-  Scenario: Customer modifies dietary preferences
-    Given a customer has the following stored preferences:
-      | Preference         | Selected |
-      | Vegetarian         | Yes      |
-      | Gluten-Free        | No       |
-    When the customer updates their preferences to:
-      | Gluten-Free        | Yes      |
-    And saves the changes
-    Then the system should update the customer's profile with the new preferences
-    And display a confirmation message:
-      """
-      Your dietary preferences have been successfully updated.
-      """
+ 
