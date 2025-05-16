@@ -91,40 +91,7 @@ public class CustomMealSteps {
         assertEquals(expected.trim(), errorMessage.trim());
     }
 
-    @Given("a customer has a saved custom meal {string} with the ingredients:")
-    public void customerHasSavedMeal(String mealName, DataTable table) {
-        customMeal = new CustomMeal(mealName);
-        table.asMaps().forEach(row -> customMeal.addIngredient(row.get("Ingredient")));
-        customMeal.saveMeal();
-        savedMeals.put(mealName, customMeal);
-    }
-
-    @When("the customer removes {string}")
-    public void removeIngredient(String ingredient) {
-        customMeal.ingredients.remove(ingredient);
-    }
-
-    @And("adds {string} instead")
-    public void addNewIngredient(String ingredient) {
-        customMeal.addIngredient(ingredient);
-    }
-
-  /*  @And("saves the changes")
-    public void saveChanges() {
-        customMeal.saveMeal();
-        confirmationMessage = "Your custom meal \"" + customMeal.getName() + "\" has been updated successfully.";
-    }*/
-
-    @Then("the system should update the custom meal with the new ingredients")
-    public void verifyUpdatedMeal() {
-        assertTrue(customMeal.containsIngredient("Tahini Sauce"));
-        assertFalse(customMeal.containsIngredient("Garlic Sauce"));
-    }
-
-  /*  @And("display a confirmation message:")
-    public void confirmUpdate(String expected) {
-        assertEquals(expected.trim(), confirmationMessage.trim());
-    }*/
+   
 
     
     @Given("a customer has a saved custom meal {string}")
