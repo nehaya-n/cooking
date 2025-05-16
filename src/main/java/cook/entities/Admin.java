@@ -2,12 +2,12 @@ package cook.entities;
 
 public class Admin {
     private String name;
-    private String password;
+   
 
     // Constructor
-    public Admin(String name, String password) {
+    public Admin(String name) {
         this.name = name;
-        this.password = password;
+        
     }
 
  /*   // Getters and Setters
