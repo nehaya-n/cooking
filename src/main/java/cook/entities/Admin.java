@@ -10,7 +10,7 @@ public class Admin {
         this.password = password;
     }
 
-    // Getters and Setters
+ /*   // Getters and Setters
     public String getName() {
         return name;
     }
@@ -25,7 +25,7 @@ public class Admin {
 
     public void setPassword(String password) {
         this.password = password;
-    }
+    }*/
 
     // Method for logging in
     public void login() {

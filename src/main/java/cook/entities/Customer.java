@@ -21,7 +21,7 @@ public class Customer {
         this.pastOrders = new ArrayList<>();
     }
 
-    // دوال الوصول (Getters) للوصول إلى الحقول
+  /*  // دوال الوصول (Getters) للوصول إلى الحقول
     public static String getName() {
         return name;
     }
@@ -40,7 +40,7 @@ public class Customer {
 
     public int getTimesOrdered() {
         return timesOrdered;
-    }
+    }*/
 
     // إضافة طريقة لإضافة طلبات سابقة
     public void addPastOrders(Order order) {

@@ -19,7 +19,7 @@ public class CustomerDietaryPreferences {
         dietaryRestrictions.add(restriction);
     }
 
-    // Remove a dietary restriction from the customer
+  /*  // Remove a dietary restriction from the customer
     public void removeDietaryRestriction(String restriction) {
         dietaryRestrictions.remove(restriction);
     }
@@ -50,5 +50,6 @@ public class CustomerDietaryPreferences {
                 "customerName='" + customerName + '\'' +
                 ", dietaryRestrictions=" + dietaryRestrictions +
                 '}';
-    }
+    }*/
+    
 }

@@ -21,7 +21,7 @@ public class CustomMeal {
 
     }
 
-    public void replaceIngredient(String original, String substitute) {
+  /*  public void replaceIngredient(String original, String substitute) {
 
         ingredient1.stream()
                 .filter(ingredient -> ingredient.getName().equals(original))
@@ -29,7 +29,7 @@ public class CustomMeal {
                     ingredient.setName(substitute);
 
         });
-    }
+    }*/
 
     public boolean containsIngredient(String ingredient) {
         return ingredients.contains(ingredient);

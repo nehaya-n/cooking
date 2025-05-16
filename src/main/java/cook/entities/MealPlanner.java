@@ -34,7 +34,7 @@ public class MealPlanner {
         System.out.println("Accessing Customer's Order History: " + pastOrders);
     }
 
-    // إضافة الطريقة لتحضير خطة الوجبات للعميل
+  /*  // إضافة الطريقة لتحضير خطة الوجبات للعميل
     public void prepareMealPlanForCustomer(Customer customer) {
         List<Order> pastOrders = customer.getPastOrders();
         
@@ -46,7 +46,7 @@ public class MealPlanner {
             System.out.println("Suggested meal: " + order.getMealName() + " based on past orders.");
         }
     }
-
+*/
     public void login() {
         System.out.println(name + " has logged in.");
     }

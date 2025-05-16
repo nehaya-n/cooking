@@ -60,7 +60,7 @@ public class OrderSystem {  // إعادة التسمية من System إلى Orde
         return meals;
     }
 
-    public void generateReport() {
+  /*  public void generateReport() {
         System.out.println("Generated report with order history");
     }
 
@@ -70,7 +70,7 @@ public class OrderSystem {  // إعادة التسمية من System إلى Orde
 
     public List<String> getInsights() {
         return insights;
-    }
+    }*/
 
 
     // تعديل من System إلى OrderSystem

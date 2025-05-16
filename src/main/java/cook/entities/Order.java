@@ -16,11 +16,11 @@ public class Order {
         this.status = status;
     }
  
-    public Order(String mealName, String orderDate, String status) {
+  /*  public Order(String mealName, String orderDate, String status) {
         this.mealName = mealName;
         this.orderDate = orderDate;
         this.status = status;
-    }
+    }*/
 
 
     @Override
