@@ -10,9 +10,21 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        
+  <sonar.organization>cookingmgt2025</sonar.organization>
+  <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+
     </properties>
 
     <dependencies>
+    
+    <dependency>
+    <groupId>org.sonarsource.scanner.maven</groupId>
+    <artifactId>sonar-maven-plugin</artifactId>
+    <version>5.1.0.4751</version>
+</dependency>
+
+
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
@@ -53,9 +65,9 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
-                <configuration>
-                    <release>20</release>
+                <version>3.11.0</version> <!-- Use a newer version -->
+            <configuration>
+                <release>20</release> 
                 </configuration>
             </plugin>
 
@@ -67,6 +79,26 @@
                     <failIfNoTests>false</failIfNoTests>
                 </configuration>
             </plugin>
+                  <plugin>
+            <groupId>org.sonarsource.scanner.maven</groupId>
+            <artifactId>sonar-maven-plugin</artifactId>
+            <version>5.1.0.4751</version> <!-- Specify the version explicitly -->
+        </plugin>
+                 <plugin>
+                   <groupId>org.jacoco</groupId>
+                   <artifactId>jacoco-maven-plugin</artifactId>
+                  <version>0.8.13</version>
+                 <executions>
+                           <execution>
+                      <goals>
+                        <goal>prepare-agent</goal>
+                            <goal>report</goal>    
+                      </goals>
+                          </execution> 
+                 </executions>
+                 </plugin>
         </plugins>
+        
     </build>
 </project>
+
