@@ -23,8 +23,13 @@ public class SupplierIntegrationTest {
     private String duplicateOrderAttempted;
 
 
-   
-  /*  @When("they request real-time pricing for the following ingredients:")
+    @Given ("the kitchen manager is logged into the inventory system")
+    public void theKitchenManagerLoggedIntoTheInventorySystem() {
+    	 System.out.println("the kitchen manager is logged into the inventory system");
+    	
+    }
+    
+    @When("they request real-time pricing for the following ingredients:")
     public void requestRealTimePricing(DataTable table) {
         for (Map<String, String> row : table.asMaps()) {
             requestedIngredients.add(row.get("Ingredient"));
@@ -35,9 +40,9 @@ public class SupplierIntegrationTest {
         retrievedPrices.add(Map.of("Supplier", "Supplier A", "Ingredient", "Tomatoes", "Price per Unit", "$2.50/kg"));
         retrievedPrices.add(Map.of("Supplier", "Supplier B", "Ingredient", "Olive Oil", "Price per Unit", "$5.00/liter"));
         retrievedPrices.add(Map.of("Supplier", "Supplier C", "Ingredient", "Chicken", "Price per Unit", "$8.00/kg"));
-    }*/
+    }
 
-  /*  @Then("the system should retrieve and display the latest prices from suppliers:")
+    @Then("the system should retrieve and display the latest prices from suppliers:")
     public void verifyRetrievedPrices(DataTable expectedTable) {
         List<Map<String, String>> expected = expectedTable.asMaps();
 
@@ -51,7 +56,7 @@ public class SupplierIntegrationTest {
         }
 
         System.out.println("All real-time prices verified successfully.");
-    }*/
+    }
     
     @Given("the kitchen manager is viewing ingredient prices from multiple suppliers")
     public void viewingIngredientPrices() {
