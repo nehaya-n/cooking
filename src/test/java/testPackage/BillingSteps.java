@@ -13,8 +13,8 @@ public class BillingSteps {
     private Invoice invoice;
     private FoodOrder order;
     private FoodOrder order1;
-    private FoodOrder order2; 
-    private FoodOrder order3; 
+    private FoodOrder order2; // Added the second order
+    private FoodOrder order3; // Added the third order
     private FinancialReport dailyReport;
     private FinancialReport monthlyReport;
 
