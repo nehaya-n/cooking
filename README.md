@@ -1,1 +1,1 @@
-description of the project 2025
+description of the project
