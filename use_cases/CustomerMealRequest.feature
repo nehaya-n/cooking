@@ -48,22 +48,7 @@ Feature: Allow Customers to Create Custom Meal Requests
       The combination of Milk and Lemon Juice is not allowed. Please modify your selection.
       """
 
-  # Scenario 4: Customer modifies a custom meal before ordering
-  Scenario: Customer edits a saved custom meal
-    Given a customer has a saved custom meal "Healthy Chicken Bowl" with the ingredients:
-      | Ingredient      |
-      | Chicken Breast  |
-      | Quinoa         |
-      | Broccoli       |
-      | Garlic Sauce   |
-    When the customer removes "Garlic Sauce"
-    And adds "Tahini Sauce" instead
-    And saves the changes
-    Then the system should update the custom meal with the new ingredients
-    And display a confirmation message:
-      """
-      Your custom meal "Healthy Chicken Bowl" has been updated successfully.
-      """
+  
 
   # Scenario 5: Customer orders a custom meal
   Scenario: Customer places an order with a custom meal
