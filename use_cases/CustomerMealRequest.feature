@@ -50,7 +50,7 @@ Feature: Allow Customers to Create Custom Meal Requests
 
   
 
-  # Scenario 5: Customer orders a custom meal
+  # Scenario 4: Customer orders a custom meal
   Scenario: Customer places an order with a custom meal
     Given a customer has a saved custom meal "Healthy Chicken Bowl"
     When they add "Healthy Chicken Bowl" to the cart
