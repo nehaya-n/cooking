@@ -45,4 +45,4 @@ Feature: Billing System
     When the system administrator requests a monthly financial report
     Then the report should include:
       | Month        | Total Revenue | Total Orders | Average Order Value |
-| February 2025 | $105.00       | 3            | $35.00              |s
+| February 2025 | $105.00       | 3            | $35.00              |
