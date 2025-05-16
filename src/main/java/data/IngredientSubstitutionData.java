@@ -8,11 +8,11 @@ import java.util.Map;
 public class IngredientSubstitutionData {
     public static final Map<String, Ingredient> ingredients = new HashMap<>();
     public static final Map<String, CustomerDietaryPreferences> customerPreferences = new HashMap<>();
-
+    public static final String VEGAN = "Vegan"; 
 
     public static void initializePreferences() {
         customerPreferences.put("Lactose-Free", new CustomerDietaryPreferences("Lactose-Free"));
-        customerPreferences.put("Vegan", new CustomerDietaryPreferences("Vegan"));
+        customerPreferences.put(VEGAN, new CustomerDietaryPreferences(VEGAN));
         customerPreferences.put("Gluten-Free", new CustomerDietaryPreferences("Gluten-Free"));
     }
 
@@ -51,7 +51,7 @@ public class IngredientSubstitutionData {
 
     public static String validateSubstitution(String ingredient, String substitute, String dietaryRestriction) {
         if (ingredient.equals("Whole Wheat Bread") && substitute.equals("Regular Bread") &&
-                dietaryRestriction.equals("Vegan")) {
+                dietaryRestriction.equals(VEGAN)) {
             return "Regular Bread is not suitable for a gluten-free diet. Please choose a different option.";
         }
         return "";
