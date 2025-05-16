@@ -188,7 +188,7 @@ public class MealOrderSteps {
     // Scenario 4: System administrator retrieves customer order history for analysis
     @Given("a system administrator is logged into the dashboard")
     public void adminIsLoggedIn() {
-        admin = new Admin("Admin", "admin123");
+        admin = new Admin("Admin");
         admin.login();
     }
 
