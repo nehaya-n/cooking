@@ -9,6 +9,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import cook.entities.CustomMeal;
 import cook.entities.CustomerDietaryPreferences;
+import org.junit.Test;
 
 import java.util.List;
 import java.util.Map;
