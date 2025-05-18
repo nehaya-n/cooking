@@ -127,4 +127,55 @@ public class UserRegistrationService {
     private boolean isValidPassword(String password) {
         return password != null && PASSWORD_PATTERN.matcher(password).matches();
     }
+    public boolean isValidLogin(String username, String password) {
+        File file = new File(DATA_FILE_PATH);
+        if (!file.exists()) {
+            return false; // الملف غير موجود
+        }
+        
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 4) {
+                    String storedUsername = parts[0].toLowerCase();
+                    String storedPassword = parts[3]; // أو إذا كانت كلمة المرور مشفرة، قم باستخدام التحقق المناسب
+                    if (storedUsername.equals(username.toLowerCase()) && storedPassword.equals(password)) {
+                        return true;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        return false; // المستخدم غير موجود
+    }
+    
+    // دالة للحصول على الدور بناءً على اسم المستخدم
+    public String getRoleByUsername(String username) {
+        File file = new File(DATA_FILE_PATH);
+        if (!file.exists()) {
+            return null;
+        }
+        
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 4) {
+                    String storedUsername = parts[0].toLowerCase();
+                    String role = parts[2]; // الدور في الملف
+                    if (storedUsername.equals(username.toLowerCase())) {
+                        return role;
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        return null; // الدور غير موجود
+    }
+
 }

@@ -67,6 +67,7 @@ public class Main {
         System.out.println(result);
     }
 
+   
     private static void handleLogin() {
         System.out.println("\n--- Login ---");
         System.out.print("Enter username: ");
@@ -75,7 +76,36 @@ public class Main {
         System.out.print("Enter password: ");
         String password = scanner.nextLine();
 
+        // التحقق من وجود الحساب وكلمة المرور
+        boolean isValid = userService.isValidLogin(username, password);
+        
+        if (isValid) {
+            // الحصول على الدور بناءً على اسم المستخدم
+            String role = userService.getRoleByUsername(username);
+
+            // توجيه المستخدم إلى القائمة المناسبة بناءً على الدور
+            if (role != null) {
+                switch (role) {
+                    case "Admin":
+                        adminMenu();
+                        break;
+                    case "Chef":
+                        chefMenu();
+                        break;
+                    case "Customer":
+                        // إذا كان المستخدم عميل، يمكننا تخصيص العميل من هنا (هنا مجرد مثال)
+                        Customer customer = new Customer(username, isValid, isValid); // هنا تحتاج لتعديل بناءً على كيفية تعريف العميل
+                        customerMenu(customer);
+                        break;
+                    default:
+                        System.out.println("Unknown role.");
+                }
+            }
+        } else {
+            System.out.println("Invalid username or password.");
+        }
     }
+
           
 
           
