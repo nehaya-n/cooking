@@ -6,6 +6,7 @@ public class Invoice {
     private String items;
     private double totalAmount;
     private String paymentStatus;
+    private Order order;
 
     public Invoice(String invoiceNumber, String orderId, String items, double totalAmount) {
         this.invoiceNumber = invoiceNumber;
@@ -43,4 +44,5 @@ public class Invoice {
         // Dummy method to simulate sending the invoice.
         System.out.println("Invoice sent to: " + customerEmail);
     }
+ 
 }

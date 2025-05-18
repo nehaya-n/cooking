@@ -1,6 +1,7 @@
 package cook.entities;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class CustomerDietaryPreferences {
@@ -14,6 +15,7 @@ public class CustomerDietaryPreferences {
         this.dietaryRestrictions = new HashSet<>();
     }
     
+    
 
     // Add a dietary restriction to the customer
     public void addDietaryRestriction(String restriction) {
@@ -24,6 +26,8 @@ public class CustomerDietaryPreferences {
     public Set<String> getDietaryRestrictions() {
         return new HashSet<>(dietaryRestrictions);
     }
+
+
 
   
 }

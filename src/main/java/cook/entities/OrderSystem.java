@@ -31,7 +31,7 @@ public class OrderSystem {  // إعادة التسمية من System إلى Orde
         return cart.contains(mealName);
     }
 
-
+/*
     public String getConfirmationMessage() {
         return confirmationMessage;
     }
@@ -42,7 +42,7 @@ public class OrderSystem {  // إعادة التسمية من System إلى Orde
 
     public List<String> getMealSuggestions() {
         return mealSuggestions;
-    }
+    }*/
 
     public void addOrder(Order order) {
         pastOrders.add(order);

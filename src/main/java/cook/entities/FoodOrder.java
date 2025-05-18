@@ -33,12 +33,12 @@ public class FoodOrder {
   /*  public void setSubscription(boolean isSubscription) {
         this.isSubscription = isSubscription;
         this.totalAmount = calculateTotalAmount(); // Recalculate total amount when subscription changes
-    }*/
+    }
 
     public void setDeliveryTime(String deliveryTime) {
         this.deliveryTime = deliveryTime;
     }
-
+*/
     // Function to generate invoice
    /* public String generateInvoice() {
         String invoiceNumber = "INV-" + orderId.substring(1); // Create invoice number based on order ID

@@ -41,20 +41,20 @@ public class Order {
 
 
 
-    // Getters
+  /* // Getters
     public String getOrderId() {
         return orderId;
-    }
+    }*/
 
     public String getMealName() {
         return mealName;
     }
-
+/*
     public String getOrderDate() {
         return orderDate;
     }
 
     public String getStatus() {
         return status;
-    }
+    }*/
 }

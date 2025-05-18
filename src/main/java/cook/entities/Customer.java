@@ -21,11 +21,13 @@ public class Customer {
         this.pastOrders = new ArrayList<>();
     }
 
-  /*  // دوال الوصول (Getters) للوصول إلى الحقول
-    public static String getName() {
+    // دوال الوصول (Getters) للوصول إلى الحقول
+  /*  public static String getName() {
         return name;
     }
-
+    public static String etName() {
+        return name;
+    }
     public boolean isVegetarian() {
         return isVegetarian;
     }
