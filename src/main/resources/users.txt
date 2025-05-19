@@ -1,5 +1,6 @@
-lana12,lana567@gmail.com,Customer,passWord1
-existing,usedemail@gmail.com,Customer,passWord1
+
 nehaya,nehaya@gmail.com,Chef,123456+a
 sundos,sundos@gmail.com,Customer,123456+a
 malak,malak@gmail.com,Kitchen Manager,123456+a
+lana12,lana567@gmail.com,Customer,passWord1
+existing,usedemail@gmail.com,Customer,passWord1
