@@ -6,6 +6,8 @@ public class Ingredient {
     private int lowStockThreshold;
     private boolean alertAcknowledged;
     private String unit;
+    private double price;
+
 
     public Ingredient(String name, int stock, int lowStockThreshold) {
         this.name = name;
@@ -16,13 +18,25 @@ public class Ingredient {
     }
 
 
-    public String getName() {
+    public Ingredient(String name, int stock, double price) {
+        this.name = name;
+        this.stock = stock;
+        this.price = price;
+    }
+
+
+
+	public String getName() {
         return name;
     }
 
     public int getStock() {
         return stock;
     }
+    public double getPrice() {
+        return price;
+    }
+
 
     public void setLowStockThreshold(int threshold) {
         this.lowStockThreshold = threshold;
@@ -67,4 +81,7 @@ public class Ingredient {
 
     public void setAlertTime(long time) { this.alertTime = time; }
     public long getAlertTime() { return this.alertTime; }
+
+
+	
 }

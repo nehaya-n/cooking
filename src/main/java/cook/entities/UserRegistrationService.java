@@ -25,7 +25,7 @@ public class UserRegistrationService {
     private static final Pattern PASSWORD_PATTERN = Pattern.compile("^(?=.*[a-zA-Z]).{6,}$");
 
     // الأدوار المسموح بها فقط
-    private static final Set<String> VALID_ROLES = Set.of("Customer", "Chef", "Admin");
+    private static final Set<String> VALID_ROLES = Set.of("Customer", "Chef", "Kitchen Manager");
 
     public UserRegistrationService() {
         loadDataFromFile();
@@ -63,15 +63,7 @@ public class UserRegistrationService {
         return "Account created successfully";
     }
 
-    public void clearData() {
-        registeredUsernames.clear();
-        registeredEmails.clear();
-        // حذف الملف الخارجي إذا تريد مسح البيانات بالكامل
-        File file = new File(DATA_FILE_PATH);
-        if (file.exists()) {
-            file.delete();
-        }
-    }
+
 
     private void loadDataFromFile() {
         File file = new File(DATA_FILE_PATH);
@@ -108,7 +100,7 @@ public class UserRegistrationService {
     }
 
 
-    private boolean isValidUsername(String username) {
+    public boolean isValidUsername(String username) {
         return username != null && USERNAME_PATTERN.matcher(username).matches();
     }
 
@@ -124,7 +116,7 @@ public class UserRegistrationService {
         return email != null && registeredEmails.contains(email.toLowerCase());
     }
 
-    private boolean isValidPassword(String password) {
+    public boolean isValidPassword(String password) {
         return password != null && PASSWORD_PATTERN.matcher(password).matches();
     }
     public boolean isValidLogin(String username, String password) {
