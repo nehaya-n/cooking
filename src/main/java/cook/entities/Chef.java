@@ -15,10 +15,10 @@ public class Chef {
         this.taskList = new ArrayList<>();
     }
 
-  /*  public String getName() {
+    public String getName() {
         return name;
     }
-
+/*
     public String getExpertise() {
         return expertise;
     }*/

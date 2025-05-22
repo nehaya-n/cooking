@@ -2,3 +2,13 @@ Customer: sundos
 Dietary Restrictions:
 - tomato
 -----
+Customer: sundos
+Dietary Restrictions:
+- 66
+- 4
+- 5
+-----
+Customer: laila
+Dietary Restrictions:
+- chees
+-----

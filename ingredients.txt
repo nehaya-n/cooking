@@ -1,0 +1,5 @@
+Tomato,210,0.5
+Cheese,50,1.2
+Lettuce,80,0.3
+Chicken,30,3.5
+Peanuts,10,2.0

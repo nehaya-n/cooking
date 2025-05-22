@@ -1,3 +1,4 @@
+
 package cook.entities;
 
 import java.util.Objects;
@@ -16,11 +17,7 @@ public class Order {
         this.status = status;
     }
  
-  /*  public Order(String mealName, String orderDate, String status) {
-        this.mealName = mealName;
-        this.orderDate = orderDate;
-        this.status = status;
-    }*/
+
 
 
     @Override
@@ -41,20 +38,24 @@ public class Order {
 
 
 
-   // Getters
+    // Getters
     public String getOrderId() {
+
         return orderId;
     }
 
     public String getMealName() {
+
         return mealName;
     }
 
     public String getOrderDate() {
+
         return orderDate;
     }
 
     public String getStatus() {
+
         return status;
     }
 }

@@ -2,7 +2,7 @@ package cook.entities;
 
 public class Ingredient {
     public  String name;
-    private int stock;
+    public int stock;
     private int lowStockThreshold;
     private boolean alertAcknowledged;
     private String unit;
@@ -18,11 +18,7 @@ public class Ingredient {
     }
 
 
-    public Ingredient(String name, int stock, double price) {
-        this.name = name;
-        this.stock = stock;
-        this.price = price;
-    }
+ 
 
 
 
@@ -33,9 +29,7 @@ public class Ingredient {
     public int getStock() {
         return stock;
     }
-    public double getPrice() {
-        return price;
-    }
+
 
 
     public void setLowStockThreshold(int threshold) {

@@ -108,7 +108,7 @@ public class UserRegistrationService {
         return username != null && registeredUsernames.contains(username.toLowerCase());
     }
 
-    private boolean isValidEmail(String email) {
+    public boolean isValidEmail(String email) {
         return email != null && EMAIL_PATTERN.matcher(email).matches();
     }
 

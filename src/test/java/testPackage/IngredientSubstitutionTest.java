@@ -50,16 +50,7 @@ public class IngredientSubstitutionTest {
     }
 
 
-    @And("the following ingredient is out of stock:")
-    public void theFollowingIngredientIsOutOfStock(DataTable dataTable) {
 
-        Map<String, String> data = dataTable.asMap(String.class, String.class);
-        IngredientSubstitutionData.updateStock("Avocado", Integer.parseInt(data.get("Avocado")));
-        IngredientSubstitutionData.updateStock("Tomato", Integer.parseInt(data.get("Tomato")));
-        IngredientSubstitutionData.updateStock("Onion", Integer.parseInt(data.get("Onion")));
-
-
-    }
 
 
 

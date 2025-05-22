@@ -10,11 +10,6 @@ public class IngredientSubstitutionData {
     public static final Map<String, CustomerDietaryPreferences> customerPreferences = new HashMap<>();
     public static final String VEGAN = "Vegan"; 
 
-    public static void initializePreferences() {
-        customerPreferences.put("Lactose-Free", new CustomerDietaryPreferences("Lactose-Free"));
-        customerPreferences.put(VEGAN, new CustomerDietaryPreferences(VEGAN));
-        customerPreferences.put("Gluten-Free", new CustomerDietaryPreferences("Gluten-Free"));
-    }
 
     public static Ingredient getIngredientByName(String name) {
         return ingredients.get(name);

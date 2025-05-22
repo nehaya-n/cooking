@@ -28,16 +28,7 @@ public class RestockData {
                 .findFirst().orElse(null);
     } //إذا وجد طلبًا غير مسلّم، ترجعه، وإذا لم يكن هناك طلب مطابق، ترجِع null
 
-    public static String generateStockReport() {
-        StringBuilder report = new StringBuilder();
-        for (Ingredient ingredient : IngredientData.getIngredients()) {
-            String status = getStatus(ingredient);
-            report.append("| ").append(ingredient.getName())
-                    .append(" | ").append(ingredient.getStock()).append(" ")
-                    .append(" | ").append(status).append(" |\n");
-        }
-        return report.toString();
-    }
+   
 
     public static String getStatus(Ingredient ingredient) {
         if (ingredient.getStock() == 0) return "Out of Stock";

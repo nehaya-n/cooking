@@ -1,3 +1,5 @@
+
+
 package cook.entities;
 
 import java.util.*;
@@ -31,18 +33,8 @@ public class OrderSystem {  // إعادة التسمية من System إلى Orde
         return cart.contains(mealName);
     }
 
-/*
-    public String getConfirmationMessage() {
-        return confirmationMessage;
-    }
 
-    public void setMealSuggestions(List<String> suggestions) {
-        this.mealSuggestions = suggestions;
-    }
 
-    public List<String> getMealSuggestions() {
-        return mealSuggestions;
-    }*/
 
     public void addOrder(Order order) {
         pastOrders.add(order);
@@ -60,17 +52,6 @@ public class OrderSystem {  // إعادة التسمية من System إلى Orde
         return meals;
     }
 
-  /*  public void generateReport() {
-        System.out.println("Generated report with order history");
-    }
-
-    public void retrieveOrderHistory(String timePeriod) {
-        System.out.println("Retrieved order history for " + timePeriod);
-    }
-
-    public List<String> getInsights() {
-        return insights;
-    }*/
 
 
     // تعديل من System إلى OrderSystem

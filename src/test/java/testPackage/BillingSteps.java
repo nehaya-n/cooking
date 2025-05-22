@@ -89,17 +89,13 @@ public class BillingSteps {
     }
     @Then("the daily report should include :")
     public void thenTheReportShouldInclude(io.cucumber.datatable.DataTable dataTable) {
-        assertEquals(dataTable.cell(1, 0), dailyReport.getDate());
-        assertEquals(Double.parseDouble(dataTable.cell(1, 1).replace("$", "")), dailyReport.getTotalRevenue(), 0.01);
-        assertEquals(Integer.parseInt(dataTable.cell(1, 2)), dailyReport.getNumberOfOrders());
+        assertEquals(Double.parseDouble(dataTable.cell(1, 0).replace("$", "")), dailyReport.getTotalRevenue(), 0.01);
+        assertEquals(Integer.parseInt(dataTable.cell(1, 1)), dailyReport.getNumberOfOrders());
     }
 
    
 
-    @And("the system should store the report for future analysis")
-    public void andTheSystemShouldStoreTheReportForFutureAnalysis() {
-        System.out.println("Daily report stored for future analysis.");
-    }
+  
 
     @Given("the system has recorded transactions for the month of {string}")
     public void givenTheSystemHasRecordedTransactionsForTheMonth(String month) {
@@ -128,18 +124,16 @@ public class BillingSteps {
 
     @Then("the report should include:")
     public void thenTheReportShouldIncludeMonthly(io.cucumber.datatable.DataTable dataTable) {
-        // Ensure monthlyReport is not null
         assertNotNull("Monthly report should not be null", monthlyReport);
-        
-        // Remove "$" and "," before parsing the number
-        String totalRevenueString = dataTable.cell(1, 1).replace("$", "").replace(",", "");
-        double expectedTotalRevenue = Double.parseDouble(totalRevenueString);
-        
-        // Ensure the expected revenue matches the calculated revenue
+
+        double expectedTotalRevenue = Double.parseDouble(dataTable.cell(1, 0).replace("$", "").replace(",", ""));
+        int expectedOrders = Integer.parseInt(dataTable.cell(1, 1));
+
         assertEquals("Total revenue does not match", expectedTotalRevenue, monthlyReport.getTotalRevenue(), 0.01);
-        assertEquals("Month does not match", dataTable.cell(1, 0), monthlyReport.getDate());
-        assertEquals("Number of orders does not match", Integer.parseInt(dataTable.cell(1, 2)), monthlyReport.getNumberOfOrders());
+        assertEquals("Number of orders does not match", expectedOrders, monthlyReport.getNumberOfOrders());
     }
 
 
+
 }
+

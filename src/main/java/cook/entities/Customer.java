@@ -21,28 +21,11 @@ public class Customer {
         this.pastOrders = new ArrayList<>();
     }
 
-    // دوال الوصول (Getters) للوصول إلى الحقول
-  /*  public static String getName() {
+   // دوال الوصول (Getters) للوصول إلى الحقول
+    public static String getName() {
         return name;
     }
-    public static String etName() {
-        return name;
-    }
-    public boolean isVegetarian() {
-        return isVegetarian;
-    }
-
-    public boolean isGlutenFree() {
-        return isGlutenFree;
-    }
-
-    public String getFavoriteMeal() {
-        return favoriteMeal;
-    }
-
-    public int getTimesOrdered() {
-        return timesOrdered;
-    }*/
+   
 
     // إضافة طريقة لإضافة طلبات سابقة
     public void addPastOrders(Order order) {
@@ -66,3 +49,4 @@ public class Customer {
         System.out.println("Favorite meal set to: " + mealName + " with " + timesOrdered + " orders.");
     }
 }
+

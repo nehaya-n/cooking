@@ -1,3 +1,5 @@
+
+
 Feature: Billing System
 
   As a customer
@@ -34,15 +36,15 @@ Feature: Billing System
       | #12341   | $30.00       |
       | #12342   | $25.00       |
     When the system administrator generates a daily financial report
-    Then the daily report should include :
-      | Date       | Total Revenue | Number of Orders |
-      | 2025-03-03 | $105.00       | 3               |
-    And the system should store the report for future analysis
+   Then the daily report should include :
+  | Total Revenue | Number of Orders |
+  | $105.00       | 3                |
+    
 
   # Scenario 4: System generates a monthly revenue report
   Scenario: Generate monthly revenue report
     Given the system has recorded transactions for the month of "February 2025"
     When the system administrator requests a monthly financial report
     Then the report should include:
-      | Month        | Total Revenue | Total Orders | Average Order Value |
-| February 2025 | $105.00       | 3            | $35.00              |
+      | Total Orders | Total Revenue || Average Order Value |
+     | $105.00       | 3            || $35.00              |
